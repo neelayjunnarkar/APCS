@@ -15,7 +15,7 @@ import javax.swing.event.ChangeListener;
 
 public class Flag extends JPanel {
 
-	int nSides = 5;
+	int nPoints = 5;
 	double height, width, stripe_width;
 	double multiplier = 150;
 	double flag_height = 1.0, flag_length = 1.9;
@@ -27,7 +27,7 @@ public class Flag extends JPanel {
 	Color oldGloryBlue = new Color(0, 82, 165);
 	Color oldGloryRed = new Color(224, 22, 43);
 
-	JSlider slider = new JSlider(100, 500, 250);
+	JSlider slider = new JSlider(10, 1000, 250); //Slider allows for resizing, to scale, of flag
 	public Flag() { 
 		add(slider);
 		slider.addChangeListener(new ChangeListener(){
