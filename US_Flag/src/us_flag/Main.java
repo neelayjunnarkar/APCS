@@ -1,8 +1,5 @@
 package us_flag;
 
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-
 import javax.swing.JFrame;
 
 public class Main {
@@ -12,9 +9,9 @@ public class Main {
 	}
 	
 	public Main() {
-		JFrame frame = new JFrame("Neelay Junnakrar 2nd Period APCS Kuszmaul US Flag");
+		JFrame frame = new JFrame("Neelay Junnarkar 2nd Period APCS Kuszmaul US Flag");
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(900, 610);
+        frame.setSize(1300, 720);
         Flag flag = new Flag();
         frame.add(flag);
         frame.setLocationRelativeTo(null);

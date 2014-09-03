@@ -213,3 +213,20 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Intellij
+.idea/
+*.iml
+*.iws
+
+# Mac
+.DS_Store
+
+# Maven
+log/
+target/
