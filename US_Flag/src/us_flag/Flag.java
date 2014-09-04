@@ -2,6 +2,7 @@ package us_flag;
 
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -44,6 +45,14 @@ public class Flag extends JPanel {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D)g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); //smooths out drawings, especially stars (stars are rendered better)
+		Dimension dim = this.getSize();
+		
+		/*This makes sure the flag cannot be resized beyond bounds of window. Window can be resized to allow different ranges of flag sizes.*/
+		double flag_length_max, flag_height_max;
+		flag_length_max = ((dim.getWidth()-20)/flag_length); //The "-20" makes a border on the right side so the flag doesn't go all the way to the edge of the window
+		flag_height_max = ((dim.getHeight()-20)/flag_height);
+		
+		slider.setMaximum((flag_length_max < flag_height_max) ? (int)Math.round(flag_length_max) : (int)Math.round(flag_height_max) );
 		
 		multiplier = slider.getValue();
 		height = multiplier *  flag_height;
