@@ -16,7 +16,7 @@ import javax.swing.event.ChangeListener;
 public class Flag extends JPanel {
 
 	int nPoints = 5;
-	double height, width, stripe_width, multiplier; //Multiplier is the scaling value.
+	double height, width, stripe_width, multiplier = 150;
 	final double flag_height = 1.0, flag_length = 1.9;
 	final double union_height = 0.5385, union_length = 0.76;
 	final double E = 0.054, F = 0.054, G = 0.063, H = 0.063;
@@ -30,18 +30,13 @@ public class Flag extends JPanel {
 	/*Slider allows for resizing of flag while keeping flag to scale*/
 	JSlider slider = new JSlider(10, 1000, 250); 
 	
-	/*The Flag constructor adds the slider to the Flag and gives the slider functionality*/
 	public Flag() { 
 		add(slider);
-		
-		/*The ChangeListener allows the slider to repaint when the state of the slider is changed*/
 		slider.addChangeListener(new ChangeListener(){			
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				JSlider source = (JSlider)e.getSource();
-				if (source.getValueIsAdjusting()) {
-					repaint();
-				}
+				repaint();
+				add(slider);
 			}
 		});
 	}
@@ -56,6 +51,7 @@ public class Flag extends JPanel {
 		double flag_length_max, flag_height_max;
 		flag_length_max = ((dim.getWidth()-20)/flag_length); //The "-20" makes a border on the right side so the flag doesn't go all the way to the edge of the window
 		flag_height_max = ((dim.getHeight()-20)/flag_height);
+		
 		slider.setMaximum((flag_length_max < flag_height_max) ? (int)Math.round(flag_length_max) : (int)Math.round(flag_height_max) );
 		
 		multiplier = slider.getValue();
