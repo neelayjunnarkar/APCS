@@ -1,28 +1,49 @@
 package hivolts;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 import javax.swing.JFrame;
 
-public class Main {
-	JFrame frame = new JFrame("Neelay Junnarkar APCS Hivolts");
-	Screen screen = new MainScreen();
+public class Main implements KeyListener {
+	
+	JFrame frame = new JFrame("sfsafdafsa");
+	Panel panel = new Panel();
 	
 	public Main() {
+		frame.addKeyListener(this);
+		frame.setSize(640, 640);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(800, 800);
-		frame.setLocationRelativeTo(null);
+		frame.add(panel);
 		frame.setVisible(true);
-		frame.add(screen);
-		screen.requestFocusInWindow();
-		gameloop();
-	}
-	
-	private void gameloop() {
-		while (frame.isEnabled()) {
-			screen = screen.update();
-		}
+		
 	}
 	
 	public static void main(String[] args) {
 		new Main();
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		System.out.println("fdsaf");
+		switch (e.getKeyCode()) {
+		case KeyEvent.VK_ENTER:
+			System.out.println("enter");
+			panel.setGame();
+			panel.update(panel.getGraphics());
+			break;
+		default:
+			break;
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+
 	}
 }

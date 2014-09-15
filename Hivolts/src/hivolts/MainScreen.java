@@ -1,40 +1,26 @@
 package hivolts;
 
-import java.awt.Desktop.Action;
+import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.event.ActionEvent;
+import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-
-import javax.swing.AbstractAction;
-import javax.swing.JComponent;
-import javax.swing.KeyStroke;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class MainScreen extends Screen {
 	
-		
 	public MainScreen() {
-
-	}
 	
-	@Override
-	public Screen update() {
-		
-		getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "doNothing");
-		getActionMap().put("doNothing", nothing);
-		
-		return this;
 	}
 	
 	public void paintComponent(Graphics g) {
-		//System.out.println("mainscreen");
+		super.paintComponent(g);
+
+		System.out.println("MainScreen paint");
+		Graphics2D g2d = (Graphics2D)g.create();
+		g2d.setColor(Color.black);
+		g2d.fillRect(0,  0, 100, 100);
+		g2d.fillRect(0,  0, 200, 200);
 	}
 	
-	AbstractAction nothing = new AbstractAction() {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			System.out.println("nothing");
-		}
-	};
-			
 }
