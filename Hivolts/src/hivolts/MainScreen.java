@@ -15,7 +15,6 @@ public class MainScreen extends Screen {
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-
 		System.out.println("MainScreen paint");
 		Graphics2D g2d = (Graphics2D)g.create();
 		g2d.setColor(Color.black);

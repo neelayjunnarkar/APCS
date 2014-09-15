@@ -20,6 +20,10 @@ public class Panel extends JPanel {
 		screen.update(g);
 	}
 	
+	public void update(Graphics g) {
+		paintComponent(g);
+	}
+	
 	public void setGame() {
 		screen = new GameScreen();
 	}

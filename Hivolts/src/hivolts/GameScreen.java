@@ -13,7 +13,7 @@ public class GameScreen extends Screen {
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		System.out.println("paintgame");
+		System.out.println("GameScreen paint");
 		Graphics2D g2d = (Graphics2D)g.create();
 		g2d.setColor(Color.BLUE);
 		g2d.fillRect(0, 0, 100, 100);
