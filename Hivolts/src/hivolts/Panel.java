@@ -1,35 +1,47 @@
 package hivolts;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
-
 public class Panel extends JPanel {
 
-	Screen screen = new MainScreen();
+	private ArrayList< ArrayList<Entity> > entities = new ArrayList< ArrayList<Entity> >(12);
+	
+	private enum Screen {
+		MAIN, GAME, GAMEOVER;
+	}
+	Screen screen;
+	
 	
 	public Panel() {
-		add(screen);
+		setPreferredSize(new Dimension(Main.width, Main.height));
+		screen = Screen.MAIN;
+		for (int x = 0; x < 12; x++) {
+			entities.add(new ArrayList<Entity>(12));
+		}
+		for (int xy = 0; xy < 12; xy++) {
+			entities.get(0).add(xy, new Fence(0, xy));
+			entities.get(11).add(xy, new Fence(11, xy));
+			entities.get(xy).add(0, new Fence(xy, 0));
+			entities.get(xy).add(new Fence(xy, 11));//idk
+		}
 	}
 	
 	public void paintComponent(Graphics g) {
-		System.out.println("Panel paint");
-		screen.update(g);
+		super.paintComponent(g);
+		Graphics2D g2d = (Graphics2D)g.create();
+		for (ArrayList<Entity> a : entities) {
+			for (Entity e : a) {
+				e.update();
+				e.draw(g);
+			}
+		}
 	}
-	
-	public void update(Graphics g) {
-		paintComponent(g);
-	}
-	
-	public void setGame() {
-		screen = new GameScreen();
-	}
-	
-	public void setMain() {
-		screen = new MainScreen();
-	}
-	
+
 }

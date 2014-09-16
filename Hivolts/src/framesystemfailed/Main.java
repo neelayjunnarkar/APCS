@@ -1,4 +1,4 @@
-package hivolts;
+package framesystemfailed;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -6,23 +6,17 @@ import java.awt.event.KeyListener;
 import javax.swing.JFrame;
 
 public class Main implements KeyListener {
-
-	public static final int width = 640, height = 640;
 	
-	JFrame frame = new JFrame("Neelay Junnarkar Hivolts 2 APCS ");
+	JFrame frame = new JFrame("sfsafdafsa");
 	Panel panel = new Panel();
 	
 	public Main() {
 		frame.addKeyListener(this);
-		frame.setSize(width, height);
+		frame.setSize(640, 640);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(panel);
-		frame.pack();
 		frame.setVisible(true);
 		
-		while (frame.isActive()) {
-			panel.repaint();
-		}
 	}
 	
 	public static void main(String[] args) {
@@ -31,12 +25,17 @@ public class Main implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		System.out.println("pressed");
+		//System.out.println("fdsaf");
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_ENTER:
+			//System.out.println("enter");
+			panel.setGame();
+			panel.repaint();
 			break;
 		case KeyEvent.VK_ESCAPE:
-			break;
+			//System.out.println("escape");
+			panel.setMain();
+			panel.repaint();
 		default:
 			break;
 		}
@@ -51,5 +50,4 @@ public class Main implements KeyListener {
 	public void keyTyped(KeyEvent e) {
 
 	}
-
 }
