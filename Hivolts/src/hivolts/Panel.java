@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.JPanel;
 
@@ -25,12 +26,21 @@ public class Panel extends JPanel {
 		for (int x = 0; x < 12; x++) {
 			entities.add(new ArrayList<Entity>(12));
 		}
+		
 		for (int xy = 0; xy < 12; xy++) {
 			entities.get(0).add(xy, new Fence(0, xy));
 			entities.get(11).add(xy, new Fence(11, xy));
 			entities.get(xy).add(0, new Fence(xy, 0));
 			entities.get(xy).add(new Fence(xy, 11));//idk
 		}
+		
+//		Random rand = new Random();
+//		int x, y;
+//		for (int i = 0; i < 20; i++) {
+//			x = rand.nextInt(10)+1;
+//			y = rand.nextInt(10)+1;
+//			entities.get(x).set(y, new Fence(x, y));
+//		}
 	}
 	
 	public void paintComponent(Graphics g) {
