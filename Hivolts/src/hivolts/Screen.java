@@ -1,8 +1,11 @@
 package hivolts;
 
-import javax.swing.JPanel;
+import javax.swing.*;
+import java.awt.*;
 
-public abstract class Screen extends JPanel{
-	
-	public abstract Screen update();
+/**
+ * Created by Neelay on 9/13/2014.
+ */
+public abstract class Screen extends JComponent {
+    public abstract void paintComponent(Graphics g);
 }
