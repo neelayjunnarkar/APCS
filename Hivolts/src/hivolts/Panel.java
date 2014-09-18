@@ -46,7 +46,7 @@ public class Panel extends JPanel {
             x = rand.nextInt(10) + 1;
             y = rand.nextInt(10) + 1;
         } while (isOccupied(x, y));
-        entities.get(x).set(y, new Player(x, y));
+        entities.get(x).set(y, new Player(this, x, y));
 
 	}
 	
