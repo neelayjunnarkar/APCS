@@ -1,13 +1,11 @@
 package hivolts;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.util.Random;
 
 public class Fence extends Entity {
 
-	Color fenceColor = Color.orange;
+	Color fenceColor = new Color(165, 28, 15);
 	
 	public Fence(int x, int y) {
 		super(x, y);
@@ -17,28 +15,14 @@ public class Fence extends Entity {
 	public void paintComponent(Graphics g) {
         super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D)g.create();
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2d.setColor(fenceColor);
-		g2d.fillRect(x*Main.width/12, y*Main.height/12, Main.width/12, Main.height/12);
+		g2d.fillRect(x*Main.cell_width + Main.cell_sep*x, y*Main.cell_height + Main.cell_sep*y, Main.cell_width, Main.cell_height);
 	}
 
 	@Override
 	public void update() {
-//		Random rand = new Random();
-//		int r = rand.nextInt(3);
-//		switch (r) {
-//		case 0:
-//			fenceColor = Color.white;
-//			break;
-//		case 1:
-//			fenceColor = Color.orange;
-//			break;
-//		case 2:
-//			fenceColor = Color.red;
-//			break;
-//		default:
-//			fenceColor = Color.black;
-//			break;
-//		}
+
 	}
 
 	@Override

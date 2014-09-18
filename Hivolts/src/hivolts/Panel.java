@@ -1,8 +1,6 @@
 package hivolts;
 
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -19,10 +17,9 @@ public class Panel extends JPanel {
 	}
 	Screen screen;
 	
-	
 	public Panel() {
 		setPreferredSize(new Dimension(Main.width, Main.height));
-		screen = Screen.MAIN;
+		screen = Screen.GAME;
 
         for (int x = 0; x < 12; x++) {
             entities.add(new ArrayList<Entity>(12));
@@ -41,17 +38,22 @@ public class Panel extends JPanel {
             do {
                 x = rand.nextInt(10) + 1;
                 y = rand.nextInt(10) + 1;
-            } while (isFence(x, y));
+            } while (isOccupied(x, y));
             entities.get(x).set(y, new Fence(x, y));
         }
 
-
+        do {
+            x = rand.nextInt(10) + 1;
+            y = rand.nextInt(10) + 1;
+        } while (isOccupied(x, y));
+        entities.get(x).set(y, new Player(x, y));
 
 	}
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D)g.create();
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		for (ArrayList<Entity> a : entities) {
 			for (Entity e : a) {
 				e.update();
@@ -60,9 +62,15 @@ public class Panel extends JPanel {
 		}
 	}
 
+    private boolean isOccupied(int x, int y) {
+        return (isFence(x, y) || isPlayer(x, y));
+    }
     private boolean isFence(int x, int y) {
-        //if (entities.get(x).get(y) instanceof Fence) return true;
         return (entities.get(x).get(y) instanceof Fence);
+    }
+
+    private boolean isPlayer(int x, int y) {
+        return (entities.get(x).get(y) instanceof Player);
     }
 
 }
