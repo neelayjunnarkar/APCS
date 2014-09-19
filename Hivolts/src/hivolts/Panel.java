@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 public class Panel extends JPanel {
 
 	private ArrayList< ArrayList<Entity> > entities = new ArrayList< ArrayList<Entity> >(12);
+        public ArrayList< ArrayList<Entity> > getEntities() { return entities; }
 	
 	private enum Screen {
 		MAIN, GAME, GAMEOVER;
@@ -42,6 +43,14 @@ public class Panel extends JPanel {
             entities.get(x).set(y, new Fence(x, y));
         }
 
+        for (int i = 0; i < 12; i++) {
+            do {
+                x = rand.nextInt(10) + 1;
+                y = rand.nextInt(10) + 1;
+            } while (isOccupied(x, y));
+            entities.get(x).set(y, new Mho(x, y));
+        }
+
         do {
             x = rand.nextInt(10) + 1;
             y = rand.nextInt(10) + 1;
@@ -57,18 +66,29 @@ public class Panel extends JPanel {
 		for (ArrayList<Entity> a : entities) {
 			for (Entity e : a) {
 				e.update();
+                if (e instanceof LivingEntity) {
+                    if (((LivingEntity)e).isDead()) {
+                        System.out.println("dead");
+                    }
+                }
 				e.draw(g);
 			}
 		}
 	}
 
-    private boolean isOccupied(int x, int y) {
+    public boolean isMurderer(int x, int y) {
+        return (isFence(x, y) || isMho(x, y));
+    }
+    public boolean isOccupied(int x, int y) {
         return (isFence(x, y) || isPlayer(x, y));
     }
-    private boolean isFence(int x, int y) {
+
+    public boolean isFence(int x, int y) {
         return (entities.get(x).get(y) instanceof Fence);
     }
-
+    private boolean isMho(int x, int y) {
+        return (entities.get(x).get(y) instanceof Mho);
+    }
     private boolean isPlayer(int x, int y) {
         return (entities.get(x).get(y) instanceof Player);
     }

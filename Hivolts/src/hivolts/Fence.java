@@ -27,8 +27,6 @@ public class Fence extends Entity {
 
 	@Override
 	public void draw(Graphics g) {
-		//System.out.println("hello");
-		//update(g);
 		paintComponent(g);
 	}
 	

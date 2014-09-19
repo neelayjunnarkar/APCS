@@ -4,23 +4,22 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.nio.channels.spi.AbstractInterruptibleChannel;
+import java.util.Random;
 
 /**
  * Created by Neelay on 9/17/2014.
  */
 
-public class Player extends Entity{
+public class Player extends LivingEntity {
 
-    Color playerColor = new Color(5, 98, 165);
+    Color playerColor = new Color(5, 98, 150);
     Panel panel;
     
     enum Key {
     	
     	Q(KeyStroke.getKeyStroke(KeyEvent.VK_Q, 0), "Q"),
     	W(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0), "W"),
-    	E(KeyStroke.getKeyStroke(KeyEvent.VK_E, 0), "E"),
+        E(KeyStroke.getKeyStroke(KeyEvent.VK_E, 0), "E"),
     	A(KeyStroke.getKeyStroke(KeyEvent.VK_A, 0), "A"),
     	S(KeyStroke.getKeyStroke(KeyEvent.VK_E, 0), "S"),
     	D(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0), "D"),
@@ -71,7 +70,6 @@ public class Player extends Entity{
     	
         public KeyAction(Key key) {
         	this.key = key;
-            System.out.println("KeyAction constructor");
         }
         
         @Override
@@ -81,39 +79,57 @@ public class Player extends Entity{
         		System.out.println("Q");
         		y--;
         		x--;
+                if (panel.isMurderer(x, y)) { dead = true; }
         		break;
         	case W:
         		y--;
+                if (panel.isMurderer(x, y)) { dead = true; }
         		break;
         	case E:
         		System.out.println("E");
         		y--;
         		x++;
+                if (panel.isMurderer(x, y)) { dead = true; }
         		break;
         	case A:
         		x--;
+                if (panel.isMurderer(x, y)) { dead = true; }
         		break;
         	case S:
         		break;
         	case D:
         		x++;
+                if (panel.isMurderer(x, y)) { dead = true; }
         		System.out.println("D");
         		break;
         	case Z:
         		y++;
         		x--;
+                if (panel.isMurderer(x, y)) { dead = true; }
         		break;
         	case X:
         		y++;
+                if (panel.isMurderer(x, y)) { dead = true; }
         		break;
         	case C:
         		y++;
         		x++;
+                if (panel.isMurderer(x, y)) { dead = true; }
         		break;
         	case J:
+                System.out.println("J");
+                Random rand = new Random();
+                int newx, newy;
+                do {
+                    newx = rand.nextInt(10) + 1;
+                    newy = rand.nextInt(10) + 1;
+                } while (panel.isFence(newx, newy));
+                x = newx;
+                y = newy;
+                if (panel.isMurderer(x, y)) { dead = true; }
         		break;
         	default:
-        		System.out.println("some other key");
+        		System.out.println("weirdness just happened");
         		break;
         	}
         		
