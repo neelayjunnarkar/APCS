@@ -6,7 +6,10 @@ package hivolts;
 public class LivingEntity extends Entity {
 
     boolean dead = false;
-        public boolean isDead() { return dead; }
+
+    public boolean isDead() {
+        return dead;
+    }
 
     public LivingEntity(int x, int y) {
         super(x, y);
