@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class Fence extends Entity {
 
-    Color fenceColor = new Color(165, 28, 15);
+    Color fenceColor = new Color(201, 14, 0);//165, 28, 15);
 
     public Fence(int x, int y) {
         super(x, y);

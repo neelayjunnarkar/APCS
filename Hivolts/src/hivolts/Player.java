@@ -69,16 +69,20 @@ public class Player extends LivingEntity {
 
     @Override
     public void update() {
-
+		if (panel.isMurderer(x, y)) {
+			dead = true;
+		}
     }
 
     @Override
     public void draw(Graphics g) {
         super.paintComponent(g);
-        Graphics2D g2d = (Graphics2D) g.create();
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2d.setColor(playerColor);
-        g2d.fillOval((x * Main.cell_width + Main.cell_sep * x), (y * Main.cell_height + Main.cell_sep * y), Main.cell_width, Main.cell_height);
+        if (!dead) {
+	        Graphics2D g2d = (Graphics2D) g.create();
+	        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+	        g2d.setColor(playerColor);
+	        g2d.fillOval((x * Main.cell_width + Main.cell_sep * x), (y * Main.cell_height + Main.cell_sep * y), Main.cell_width, Main.cell_height);
+        }
     }
 
 
@@ -95,7 +99,7 @@ public class Player extends LivingEntity {
             action = true;
             switch (key) {
                 case Q:
-                    System.out.println("Q");
+                    //System.out.println("Q");
                     y--;
                     x--;
                     if (panel.isMurderer(x, y)) {
@@ -109,7 +113,7 @@ public class Player extends LivingEntity {
                     }
                     break;
                 case E:
-                    System.out.println("E");
+                   // System.out.println("E");
                     y--;
                     x++;
                     if (panel.isMurderer(x, y)) {
@@ -123,7 +127,7 @@ public class Player extends LivingEntity {
                     }
                     break;
                 case S:
-                    System.out.println("s");
+                   // System.out.println("s");
                     if (panel.isMurderer(x, y)) {
                         dead = true;
                     }
@@ -133,7 +137,7 @@ public class Player extends LivingEntity {
                     if (panel.isMurderer(x, y)) {
                         dead = true;
                     }
-                    System.out.println("D");
+                   // System.out.println("D");
                     break;
                 case Z:
                     y++;
@@ -156,7 +160,7 @@ public class Player extends LivingEntity {
                     }
                     break;
                 case J:
-                    System.out.println("J");
+                   // System.out.println("J");
                     Random rand = new Random();
                     int newx, newy;
                     do {
