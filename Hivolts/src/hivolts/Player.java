@@ -98,14 +98,23 @@ public class Player extends LivingEntity {
     }
 
     /**
+     * int x: player tracks its own position
+     */
+    int x;
+    
+    /**
+     * int y: player tracks its own position
+     */
+    int y;
+    
+    /**
      * Constructor of Player class
      * Binds actions to keys
      * @param panel
      * @param x
      * @param y
      */
-    public Player(Panel panel, int x, int y) {
-        super(x, y);
+    public Player(Panel panel) {
         requestFocusInWindow();
         this.panel = panel;
 
@@ -168,7 +177,7 @@ public class Player extends LivingEntity {
             action = true;
             switch (key) {
                 case Q:
-                    //System.out.println("Q");
+                    System.out.println("Q");
                     y--;
                     x--;
                     if (panel.isMurderer(x, y)) {
@@ -227,6 +236,7 @@ public class Player extends LivingEntity {
                     if (panel.isMurderer(x, y)) {
                         dead = true;
                     }
+                    
                     break;
                 case J:
                    // System.out.println("J");

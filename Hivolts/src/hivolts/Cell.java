@@ -25,7 +25,7 @@ public class Cell extends JComponent {
     public void setEntity(Entity entity) {
         this.entity = entity;
     }
-    public void switchEntities(Cell cell) {
+    public void swap(Cell cell) {
         Entity otherentity = cell.getEntity();
         cell.setEntity(entity);
         entity = otherentity;
@@ -41,8 +41,12 @@ public class Cell extends JComponent {
 
 
     public Cell(int x, int y) {
+    	this(x, y, new Entity());
+    }
+    public Cell(int x, int y, Entity entity) {
         this.x = x;
         this.y = y;
+        this.entity = entity;
     }
 
     public void update() {

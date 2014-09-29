@@ -24,8 +24,7 @@ public class Mho extends LivingEntity {
      * @param x x-coord
      * @param y y-coord
      */
-    public Mho(Panel panel, int x, int y) {
-        super(x, y);
+    public Mho(Panel panel) {
         this.panel = panel;
     }
 
@@ -35,92 +34,92 @@ public class Mho extends LivingEntity {
      * Moves Mho based on layout of board and location of player
      */
     public void update(int x, int y) {
-    	
-    	if (panel.isFence(x, y)) {
-    		dead = true;
-    	}
-    	if (dead) {
-    		return;
-    	}
-    	
-    	/*Checks if Mho is on same axis as Player and moves Mho horizontally or vertically towards Player*/
-        if (panel.getPlayerX() == x) {
-            if (panel.getPlayerY() > y && !panel.isMho(x, y+1)) {
-                y++;
-            } else if (panel.getPlayerY() < y && !panel.isMho(x, y+1)) {
-                y--;
-            }
-        	if (panel.isFence(x, y)) {
-        		dead = true;
-        	}
-            return;
-        }
-        if (panel.getPlayerY() == y) {
-            if (panel.getPlayerX() > x && !panel.isMho(x+1, y)) {
-                x++;
-            } else if (panel.getPlayerX() < x && !panel.isMho(x-1, y)) {
-                x--;
-            }
-        	if (panel.isFence(x, y)) {
-        		dead = true;
-        	}
-            return;
-        }
-        
-        /*Checks if Mho is diagonal to the Player and moves Mho diagonally towards Player*/
-        if (Math.abs(x-panel.getPlayerX()) == Math.abs(y-panel.getPlayerY())) {
-        	if (x-panel.getPlayerX() < 0) {
-        		if (y-panel.getPlayerY() < 0 && !panel.isMho(x+1, y+1)) {
-        			x++;
-        			y++;
-        		} else if (y-panel.getPlayerY() > 0 && !panel.isMho(x+1, y-1)) {
-        			x++;
-        			y--;
-        		}
-            	if (panel.isFence(x, y)) {
-            		dead = true;
-            	}
-            	return;
-        	}
-        	if (x-panel.getPlayerX() > 0) {
-        		if (y-panel.getPlayerY() < 0 && !panel.isMho(x-1, y+1)) {
-        			x--;
-        			y++;
-        		} else if (y-panel.getPlayerY() > 0 && !panel.isMho(x-1, y-1)) {
-        			x--;
-        			y--;
-        		}
-            	if (panel.isFence(x, y)) {
-            		dead = true;
-            	}
-            	return;
-        	}
-
-        }
-        
-      
-        if (Math.abs(x-panel.getPlayerX()) >= Math.abs(y-panel.getPlayerY())) {
-        	if (x-panel.getPlayerX() < 0 && !panel.isMho(x+1, y)) {
-        		x++;
-        	} else if (x-panel.getPlayerX() > 0 && !panel.isMho(x-1, y)) {
-        		x--;
-        	}
-        	if (panel.isFence(x, y)) {
-        		dead = true;
-        	}
-        	return;
-        }
-        if (Math.abs(y-panel.getPlayerY()) >= Math.abs(x-panel.getPlayerX())) {
-        	if (y-panel.getPlayerY() < 0 && !panel.isMho(x, y+1)) {
-        		y++;
-        	} else if (y-panel.getPlayerY() > 0 && !panel.isMho(x, y-1)) {
-        		y--;
-        	}
-        	if (panel.isFence(x, y)) {
-        		dead = true;
-        	}
-        	return;
-        }
+//    	
+//    	if (panel.isFence(x, y)) {
+//    		dead = true;
+//    	}
+//    	if (dead) {
+//    		return;
+//    	}
+//    	
+//    	/*Checks if Mho is on same axis as Player and moves Mho horizontally or vertically towards Player*/
+//        if (panel.getPlayerX() == x) {
+//            if (panel.getPlayerY() > y && !panel.isMho(x, y+1)) {
+//                y++;
+//            } else if (panel.getPlayerY() < y && !panel.isMho(x, y+1)) {
+//                y--;
+//            }
+//        	if (panel.isFence(x, y)) {
+//        		dead = true;
+//        	}
+//            return;
+//        }
+//        if (panel.getPlayerY() == y) {
+//            if (panel.getPlayerX() > x && !panel.isMho(x+1, y)) {
+//                x++;
+//            } else if (panel.getPlayerX() < x && !panel.isMho(x-1, y)) {
+//                x--;
+//            }
+//        	if (panel.isFence(x, y)) {
+//        		dead = true;
+//        	}
+//            return;
+//        }
+//        
+//        /*Checks if Mho is diagonal to the Player and moves Mho diagonally towards Player*/
+//        if (Math.abs(x-panel.getPlayerX()) == Math.abs(y-panel.getPlayerY())) {
+//        	if (x-panel.getPlayerX() < 0) {
+//        		if (y-panel.getPlayerY() < 0 && !panel.isMho(x+1, y+1)) {
+//        			x++;
+//        			y++;
+//        		} else if (y-panel.getPlayerY() > 0 && !panel.isMho(x+1, y-1)) {
+//        			x++;
+//        			y--;
+//        		}
+//            	if (panel.isFence(x, y)) {
+//            		dead = true;
+//            	}
+//            	return;
+//        	}
+//        	if (x-panel.getPlayerX() > 0) {
+//        		if (y-panel.getPlayerY() < 0 && !panel.isMho(x-1, y+1)) {
+//        			x--;
+//        			y++;
+//        		} else if (y-panel.getPlayerY() > 0 && !panel.isMho(x-1, y-1)) {
+//        			x--;
+//        			y--;
+//        		}
+//            	if (panel.isFence(x, y)) {
+//            		dead = true;
+//            	}
+//            	return;
+//        	}
+//
+//        }
+//        
+//      
+//        if (Math.abs(x-panel.getPlayerX()) >= Math.abs(y-panel.getPlayerY())) {
+//        	if (x-panel.getPlayerX() < 0 && !panel.isMho(x+1, y)) {
+//        		x++;
+//        	} else if (x-panel.getPlayerX() > 0 && !panel.isMho(x-1, y)) {
+//        		x--;
+//        	}
+//        	if (panel.isFence(x, y)) {
+//        		dead = true;
+//        	}
+//        	return;
+//        }
+//        if (Math.abs(y-panel.getPlayerY()) >= Math.abs(x-panel.getPlayerX())) {
+//        	if (y-panel.getPlayerY() < 0 && !panel.isMho(x, y+1)) {
+//        		y++;
+//        	} else if (y-panel.getPlayerY() > 0 && !panel.isMho(x, y-1)) {
+//        		y--;
+//        	}
+//        	if (panel.isFence(x, y)) {
+//        		dead = true;
+//        	}
+//        	return;
+//        }
         
     }
 

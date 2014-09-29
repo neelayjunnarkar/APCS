@@ -14,20 +14,11 @@ import javax.swing.*;
  */
 public class Panel extends JPanel {
 
-    /**
-     * An array list of entities that is the board
-     */
-    private ArrayList<ArrayList<Entity>> entities = new ArrayList<>(12);
-
-    private ArrayList<ArrayList<Entity>> prev_entities = new ArrayList<>(12);
-
-    /**
-     * A getter for entities
-     * @return entities
-     */
-    public ArrayList<ArrayList<Entity>> getEntities() {
-        return entities;
-    }
+    private ArrayList<ArrayList<Cell>> cells = new ArrayList<>(12);
+    private ArrayList<ArrayList<Cell>> prev_cells = new ArrayList<>(12);
+    
+    public ArrayList<ArrayList<Cell>> getCells() { return cells; }
+    public ArrayList<ArrayList<Cell>> getPrevCells() { return prev_cells; }
 
     /**
      * An enum which says which says which state the program is in--Main Menu, Game, or GameOver
@@ -80,20 +71,22 @@ public class Panel extends JPanel {
         getActionMap().put("R", new Restart());
 
         for (int x = 0; x < 12; x++) {
-            entities.add(new ArrayList<Entity>(12));
+        	cells.add(new ArrayList<Cell>(12));
             for (int y = 0; y < 12; y++) {
                 if (y == 0 || x == 0 || y == 11 || x == 11) {
-                    entities.get(x).add(new Entity(x, y));
+                	cells.get(x).add(new Cell(x, y, new Fence()));
                 } else {
-                    entities.get(x).add(new Entity(x, y));
+                    cells.get(x).add(new Cell(x, y));
                 }
             }
         }
-
+        
         spawnEntities();
     }
 
     private void spawnEntities() {
+    	
+    	
         Random rand = new Random();
         int x, y;
 
@@ -103,7 +96,7 @@ public class Panel extends JPanel {
                 x = rand.nextInt(10) + 1;
                 y = rand.nextInt(10) + 1;
             } while (isOccupied(x, y));
-            entities.get(x).set(y, new Fence(x, y));
+            cells.get(x).get(y).setEntity(new Fence());
         }
 
         /*Spawns 12 mhos randomly*/
@@ -112,7 +105,7 @@ public class Panel extends JPanel {
                 x = rand.nextInt(10) + 1;
                 y = rand.nextInt(10) + 1;
             } while (isOccupied(x, y));
-            entities.get(x).set(y, new Mho(this, x, y));
+            cells.get(x).get(y).setEntity(new Mho(this));
         }
 
         /*Spawns the player randomly*/
@@ -120,10 +113,10 @@ public class Panel extends JPanel {
             x = rand.nextInt(10) + 1;
             y = rand.nextInt(10) + 1;
         } while (isOccupied(x, y));
-        entities.get(x).set(y, new Player(this, x, y));
-        player = (Player) entities.get(x).get(y);
+        cells.get(x).get(y).setEntity(new Player(this));
+       // player = (Player) cells.get(x).get(y).getEntity();
 
-        prev_entities = entities;
+        prev_cells = cells;
     }
 
     /**
@@ -153,61 +146,52 @@ public class Panel extends JPanel {
         if (screen != Screen.GAME) {
             turn = Turn.NONE;
         }
-    	if (player.dead) {
-    		screen = Screen.GAMEOVER;
-            turn = Turn.NONE;
-    		System.out.println("gaaaaaaaaaame over");
-    	}
 
         for (int x = 0; x < Main.board_dim_x; x++) {
             for (int y = 0; y < Main.board_dim_y; y++) {
-
+            	if (cells.get(x).get(y).getEntity() instanceof Fence) System.out.println("fence: "+x+", "+y);
             	/*Updating Mhos and fences*/
-                if (prev_entities.get(x).get(y) instanceof Mho && turn == Turn.ENEMY && !entities.get(x).get(y).isUpdated()) {
-                    entities.get(x).get(y).setUpdated(true);
-                    entities.get(x).get(y).update(x, y);
-                    if (x == player.getX() && y == player.getY()) {
-                        player.setDead(true);
-                    }
-                    updated_mhos++;
-                    if (updated_mhos == total_mhos) {
-                        updated_mhos = 0;
-                        turn = Turn.PLAYER;
-                    }
-                }
-                /*Updating Player*/
-                if (turn == Turn.PLAYER && !player.isUpdated()) {
-                    player.setUpdated(true);
-                    player.update(x, y);
-                    if (player.getAction()) {
-                        player.setAction(false);
-                        turn = Turn.ENEMY;
-                    }
-                    if (player.dead) {
-                        System.out.println("player dead");
-                    }
-                }
-
-                /*Death Updating*/
-                if (prev_entities.get(x).get(y) instanceof LivingEntity) {
-                    if (((LivingEntity) entities.get(x).get(y)).isDead()) {
-                        if (entities.get(x).get(y) instanceof Mho) {
-                            total_mhos--;
-                        }
-                        entities.get(x).set(y, new Entity(x, y));
-                    }
-                }
-                entities.get(x).get(y).draw(g, x, y);
-                prev_entities = entities;
+//                if (prev_entities.get(x).get(y) instanceof Mho && turn == Turn.ENEMY && !entities.get(x).get(y).isUpdated()) {
+//                    entities.get(x).get(y).setUpdated(true);
+//                    entities.get(x).get(y).update(x, y);
+//                    updated_mhos++;
+//                    if (updated_mhos == total_mhos) {
+//                        updated_mhos = 0;
+//                        turn = Turn.PLAYER;
+//                    }
+//                }
+//                /*Updating Player*/
+//                if (turn == Turn.PLAYER && !player.isUpdated()) {
+//                    player.setUpdated(true);
+//                    player.update(x, y);
+//                    if (player.getAction()) {
+//                        player.setAction(false);
+//                        turn = Turn.ENEMY;
+//                    }
+//                    if (player.dead) {
+//                        System.out.println("player dead");
+//                    }
+//                }
+//
+//                /*Death Updating*/
+//                if (prev_entities.get(x).get(y) instanceof LivingEntity) {
+//                    if (((LivingEntity) entities.get(x).get(y)).isDead()) {
+//                        if (entities.get(x).get(y) instanceof Mho) {
+//                            total_mhos--;
+//                        }
+//                        entities.get(x).set(y, new Entity(x, y));
+//                    }
+//                }
+                cells.get(x).get(y).draw(g);
+//                prev_entities = entities;
+//            }
+//        }
+//
+//        for (int x = 0; x < Main.board_dim_x; x++) {
+//            for (int y = 0; y < Main.board_dim_y; y++) {
+//                entities.get(x).get(y).setUpdated(false);
             }
         }
-
-        for (int x = 0; x < Main.board_dim_x; x++) {
-            for (int y = 0; y < Main.board_dim_y; y++) {
-                entities.get(x).get(y).setUpdated(false);
-            }
-        }
-        prev_entities = entities;
     }
 
     /**
@@ -227,7 +211,7 @@ public class Panel extends JPanel {
      * @return returns whether space is fence or player
      */
     public boolean isOccupied(int x, int y) {
-        return (isFence(x, y) || isPlayer(x, y));
+        return (isFence(x, y) || isPlayer(x, y) || isMho(x, y));
     }
 
     /**
@@ -237,7 +221,7 @@ public class Panel extends JPanel {
      * @return returns whether is fence
      */
     public boolean isFence(int x, int y) {
-        return (entities.get(x).get(y) instanceof Fence);
+        return (cells.get(x).get(y).getEntity() instanceof Fence);
     }
 
     /**
@@ -247,7 +231,7 @@ public class Panel extends JPanel {
      * @return returns whether is mho
      */
     public boolean isMho(int x, int y) {
-        return (entities.get(x).get(y) instanceof Mho);
+        return (cells.get(x).get(y).getEntity() instanceof Mho);
     }
 
     /**
@@ -257,24 +241,24 @@ public class Panel extends JPanel {
      * @return whether is player
      */
     private boolean isPlayer(int x, int y) {
-        return (entities.get(x).get(y) instanceof Player);
+        return (cells.get(x).get(y).getEntity() instanceof Player);
     }
 
     /**
      * Returns the player x-coordinate
      * @return returns player x-coord
      */
-    public int getPlayerX() {
-        return player.getX();
-    }
+//    public int getPlayerX() {
+//        return player.getX();
+//    }
 
     /**
      * Returns the player y-coordinate
      * @return returns player y-coord
      */
-    public int getPlayerY() {
-        return player.getY();
-    }
+//    public int getPlayerY() {
+//        return player.getY();
+//    }
 
     private class Restart extends AbstractAction {
 
@@ -283,11 +267,12 @@ public class Panel extends JPanel {
             System.out.println("restart");
             for (int x = 1; x < 11; x++) {
                 for (int y = 1; y < 11; y++) {
-                    entities.get(x).set(y, new Entity(x, y));
+//                    entities.get(x).set(y, new Entity(x, y));
+                	cells.get(x).get(y).setEntity(new Entity());
                 }
             }
             spawnEntities();
-            player.dead = false;
+            //player.dead = false;
             updated_mhos = 0;
             total_mhos = 12;
         }

@@ -32,7 +32,7 @@ public class LivingEntity extends Entity {
      * @param x
      * @param y
      */
-    public LivingEntity(int x, int y) {
-        super(x, y);
+    public LivingEntity() {
+    	
     }
 }
