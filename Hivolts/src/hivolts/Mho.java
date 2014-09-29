@@ -3,20 +3,38 @@ package hivolts;
 import java.awt.*;
 
 /**
- * Created by Neelay on 9/18/2014.
+ * @author Neelay Junnarkar
+ * The Mho class is the enemy mobile class and extends LivingEntity and implements Enemy
  */
+public class Mho extends LivingEntity {
 
-public class Mho extends LivingEntity implements Enemy {
-
+    /**
+     * The color of the Mhos
+     */
     Color mhoColor = new Color(222, 97, 1);//144, 40, 13);
+
+    /**
+     * An instance of panel so the mhos have knowlege of the board
+     */
     Panel panel;
-    
+
+    /**
+     * The Mho constructor
+     * @param panel An instance of Panel
+     * @param x x-coord
+     * @param y y-coord
+     */
     public Mho(Panel panel, int x, int y) {
         super(x, y);
         this.panel = panel;
     }
 
-    public void update() {
+    /**
+     * The update method for Mhos
+     * Checks if Mho is dead or not
+     * Moves Mho based on layout of board and location of player
+     */
+    public void update(int x, int y) {
     	
     	if (panel.isFence(x, y)) {
     		dead = true;
@@ -106,7 +124,11 @@ public class Mho extends LivingEntity implements Enemy {
         
     }
 
-    public void draw(Graphics g) {
+    /**
+     * Draws the Mho on the correct location on the window depending on the x and y coordinates of the Mho
+     * @param g Graphics
+     */
+    public void draw(Graphics g, int x, int y) {
         super.paintComponent(g);
         if (!dead) {
 	        Graphics2D g2d = (Graphics2D) g.create();

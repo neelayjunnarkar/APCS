@@ -7,23 +7,45 @@ import java.awt.event.KeyEvent;
 import java.util.Random;
 
 /**
- * Created by Neelay on 9/17/2014.
+ * @author Neelay Junnarkar
+ * Class Player is the player, the user, and extends LivingEntity
  */
-
 public class Player extends LivingEntity {
 
+    /**
+     * The color of the player
+     */
     Color playerColor = new Color(5, 98, 150);
+
+    /**
+     * An instance of Panel so that the player class can have knowledge of the panel
+     */
     Panel panel;
+
+    /**
+     * Whether the user has made an action yet
+     */
     private boolean action = false;
 
+    /**
+     * Returns action
+     * @return
+     */
     public boolean getAction() {
         return action;
     }
 
+    /**
+     * Sets action
+     * @param action
+     */
     public void setAction(boolean action) {
         this.action = action;
     }
 
+    /**
+     * An enum to facilitate keyBindings by containing data about keycodes and strings
+     */
     enum Key {
 
         Q(KeyStroke.getKeyStroke(KeyEvent.VK_Q, 0), "Q"),
@@ -37,18 +59,37 @@ public class Player extends LivingEntity {
         C(KeyStroke.getKeyStroke(KeyEvent.VK_C, 0), "C"),
         J(KeyStroke.getKeyStroke(KeyEvent.VK_J, 0), "J");
 
+        /**
+         * Keystroke
+         */
         private KeyStroke keyStroke;
 
+        /**
+         * returns keystroke
+         * @return
+         */
         public KeyStroke getKeyStroke() {
             return keyStroke;
         }
 
+        /**
+         *String
+         */
         private String str;
 
+        /**
+         * Returns string
+         * @return
+         */
         public String getString() {
             return str;
         }
 
+        /**
+         * Constructor of enum Key
+         * @param keyStroke
+         * @param str
+         */
         Key(KeyStroke keyStroke, String str) {
             this.keyStroke = keyStroke;
             this.str = str;
@@ -56,6 +97,13 @@ public class Player extends LivingEntity {
 
     }
 
+    /**
+     * Constructor of Player class
+     * Binds actions to keys
+     * @param panel
+     * @param x
+     * @param y
+     */
     public Player(Panel panel, int x, int y) {
         super(x, y);
         requestFocusInWindow();
@@ -67,15 +115,22 @@ public class Player extends LivingEntity {
         }
     }
 
+    /**
+     * Update method of player
+     */
     @Override
-    public void update() {
+    public void update(int x, int y) {
 		if (panel.isMurderer(x, y)) {
 			dead = true;
 		}
     }
 
+    /**
+     * Draws player at location on map depending on x and y coordinates
+     * @param g
+     */
     @Override
-    public void draw(Graphics g) {
+    public void draw(Graphics g, int x, int y) {
         super.paintComponent(g);
         if (!dead) {
 	        Graphics2D g2d = (Graphics2D) g.create();
@@ -86,14 +141,28 @@ public class Player extends LivingEntity {
     }
 
 
+    /**
+     * Controls actions as a result of keyinput by user
+     */
     private class KeyAction extends AbstractAction {
 
+        /**
+         * Key
+         */
         private Key key;
 
+        /**
+         * Constructor for KeyAction
+         * @param key
+         */
         public KeyAction(Key key) {
             this.key = key;
         }
 
+        /**
+         * Where action as a result of keyinput is resolved
+         * @param e
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             action = true;
@@ -174,7 +243,7 @@ public class Player extends LivingEntity {
                     }
                     break;
                 default:
-                    System.out.println("weirdness just happened");
+                    System.out.println("weirdness just happened (somehow through keybindings a \"default\" key was pressed. Player)");
                     break;
             }
 
