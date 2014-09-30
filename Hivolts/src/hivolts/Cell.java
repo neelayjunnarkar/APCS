@@ -17,6 +17,8 @@ public class Cell extends JComponent {
     public int getX() {
         return x;
     }
+    
+    Panel panel;
 
     private Entity entity;
     public Entity getEntity() {
@@ -40,17 +42,21 @@ public class Cell extends JComponent {
     }
 
 
-    public Cell(int x, int y) {
-    	this(x, y, new Entity());
+    public Cell(Panel panel, int x, int y) {
+    	this(panel, x, y, new Entity(x, y));
     }
-    public Cell(int x, int y, Entity entity) {
+    
+    public Cell(Panel panel, int x, int y, Entity entity) {
+    	this.panel = panel;
         this.x = x;
         this.y = y;
         this.entity = entity;
+        System.out.println("cell x, y: "+x+" "+y);
     }
 
     public void update() {
         entity.update(x, y);
+      //  panel.getNextCells().get(entity.getEntityX()).get(entity.getEntityY()).setEntity(entity);
     }
 
     public void draw(Graphics g) {

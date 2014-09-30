@@ -11,10 +11,18 @@ import javax.swing.JComponent;
  */
 public class Entity extends JComponent {
 
+	protected int entityx, entityy;
+	public int getEntityX() { return entityx; }
+	public int getEntityY() { return entityy; }
+
+	
+	
     /**
      * The constructor for Entity
      */
-    public Entity() {
+    public Entity(int x, int y) {
+    	entityx = x;
+    	entityy = y;
     }
 
     /**
@@ -35,5 +43,6 @@ public class Entity extends JComponent {
     public void draw(Graphics g, int x, int y) {
 
     }
+
 
 }

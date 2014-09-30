@@ -17,8 +17,8 @@ public class Fence extends Entity {
     /**
      * The fence constructor
      */
-    public Fence() {
-    	
+    public Fence(int x, int y) {
+    	super(x, y);
     }
 
 

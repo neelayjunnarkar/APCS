@@ -24,7 +24,8 @@ public class Mho extends LivingEntity {
      * @param x x-coord
      * @param y y-coord
      */
-    public Mho(Panel panel) {
+    public Mho(Panel panel, int x, int y) {
+    	super(x, y);
         this.panel = panel;
     }
 

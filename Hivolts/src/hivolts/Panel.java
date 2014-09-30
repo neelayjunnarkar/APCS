@@ -16,9 +16,11 @@ public class Panel extends JPanel {
 
     private ArrayList<ArrayList<Cell>> cells = new ArrayList<>(12);
     private ArrayList<ArrayList<Cell>> prev_cells = new ArrayList<>(12);
+    private ArrayList<ArrayList<Cell>> next_cells = new ArrayList<>(12);
     
     public ArrayList<ArrayList<Cell>> getCells() { return cells; }
     public ArrayList<ArrayList<Cell>> getPrevCells() { return prev_cells; }
+    public ArrayList<ArrayList<Cell>> getNextCells() { return next_cells; }
 
     /**
      * An enum which says which says which state the program is in--Main Menu, Game, or GameOver
@@ -74,18 +76,25 @@ public class Panel extends JPanel {
         	cells.add(new ArrayList<Cell>(12));
             for (int y = 0; y < 12; y++) {
                 if (y == 0 || x == 0 || y == 11 || x == 11) {
-                	cells.get(x).add(new Cell(x, y, new Fence()));
+                	cells.get(x).add(new Cell(this, x, y, new Fence(x, y)));
                 } else {
-                    cells.get(x).add(new Cell(x, y));
+                    cells.get(x).add(new Cell(this, x, y));
                 }
             }
         }
         
         spawnEntities();
     }
+    
+    private void cleanBoard(ArrayList<ArrayList<Cell>> board) {
+    	for (int x = 1; x < 11; x++) {
+            for (int y = 1; y < 11; y++) {
+            	board.get(x).get(y).setEntity(new Entity(x, y));
+            }
+        }
+    }
 
     private void spawnEntities() {
-    	
     	
         Random rand = new Random();
         int x, y;
@@ -96,7 +105,7 @@ public class Panel extends JPanel {
                 x = rand.nextInt(10) + 1;
                 y = rand.nextInt(10) + 1;
             } while (isOccupied(x, y));
-            cells.get(x).get(y).setEntity(new Fence());
+            cells.get(x).get(y).setEntity(new Fence(x, y));
         }
 
         /*Spawns 12 mhos randomly*/
@@ -105,7 +114,7 @@ public class Panel extends JPanel {
                 x = rand.nextInt(10) + 1;
                 y = rand.nextInt(10) + 1;
             } while (isOccupied(x, y));
-            cells.get(x).get(y).setEntity(new Mho(this));
+            cells.get(x).get(y).setEntity(new Mho(this, x, y));
         }
 
         /*Spawns the player randomly*/
@@ -113,10 +122,11 @@ public class Panel extends JPanel {
             x = rand.nextInt(10) + 1;
             y = rand.nextInt(10) + 1;
         } while (isOccupied(x, y));
-        cells.get(x).get(y).setEntity(new Player(this));
+        cells.get(x).get(y).setEntity(new Player(this, x, y));
        // player = (Player) cells.get(x).get(y).getEntity();
 
         prev_cells = cells;
+        
     }
 
     /**
@@ -149,6 +159,7 @@ public class Panel extends JPanel {
 
         for (int x = 0; x < Main.board_dim_x; x++) {
             for (int y = 0; y < Main.board_dim_y; y++) {
+            	cells.get(x).get(y).update();
             	/*Updating Mhos and fences*/
 //                if (prev_entities.get(x).get(y) instanceof Mho && turn == Turn.ENEMY && !entities.get(x).get(y).isUpdated()) {
 //                    entities.get(x).get(y).setUpdated(true);
@@ -159,7 +170,7 @@ public class Panel extends JPanel {
 //                        turn = Turn.PLAYER;
 //                    }
 //                }
-//                /*Updating Player*/
+                /*Updating Player*/
 //                if (turn == Turn.PLAYER && !player.isUpdated()) {
 //                    player.setUpdated(true);
 //                    player.update(x, y);
@@ -181,16 +192,21 @@ public class Panel extends JPanel {
 //                        entities.get(x).set(y, new Entity(x, y));
 //                    }
 //                }
-                cells.get(x).get(y).draw(g);
+
 //                prev_entities = entities;
-//            }
-//        }
-//
-//        for (int x = 0; x < Main.board_dim_x; x++) {
-//            for (int y = 0; y < Main.board_dim_y; y++) {
-//                entities.get(x).get(y).setUpdated(false);
             }
         }
+        
+        cells = next_cells;
+        cleanBoard(next_cells);
+        for (int x = 0; x < Main.board_dim_x; x++) {
+            for (int y = 0; y < Main.board_dim_y; y++) {
+                cells.get(x).get(y).draw(g);
+            }
+        }
+        
+        
+        
     }
 
     /**
@@ -264,11 +280,7 @@ public class Panel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("restart");
-            for (int x = 1; x < 11; x++) {
-                for (int y = 1; y < 11; y++) {
-                	cells.get(x).get(y).setEntity(new Entity());
-                }
-            }
+            cleanBoard(cells);
             spawnEntities();
             //player.dead = false;
             updated_mhos = 0;

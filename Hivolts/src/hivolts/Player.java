@@ -96,21 +96,12 @@ public class Player extends LivingEntity {
     }
 
     /**
-     * int x: player tracks its own position
-     */
-    int entityx;
-    
-    /**
-     * int y: player tracks its own position
-     */
-    int entityy;
-    
-    /**
      * Constructor of Player class
      * Binds actions to keys
      * @param panel
      */
-    public Player(Panel panel) {
+    public Player(Panel panel, int x, int y) {
+    	super(x, y);
         requestFocusInWindow();
         this.panel = panel;
 
@@ -145,7 +136,6 @@ public class Player extends LivingEntity {
         }
     }
 
-
     /**
      * Controls actions as a result of keyinput by user
      */
@@ -173,82 +163,91 @@ public class Player extends LivingEntity {
             action = true;
             switch (key) {
                 case Q:
+                    System.out.println("Q");
                     if (entityx-1 < 0 || entityy-1 < 0) { return; }
                     if (panel.isMurderer(entityx-1, entityy-1)) {
                         dead = true;
                         return;
                     }
-                    System.out.println("Q");
                     entityy--;
                     entityx--;
                     break;
                 case W:
+                    System.out.println("W");
                     if (entityy-1 < 0) { return; }
                     if (panel.isMurderer(entityx, entityy-1)) {
                         dead = true;
                         return;
                     }
-                    System.out.println("w");
                     entityy--;
                     break;
                 case E:
+                    System.out.println("E");
                     if (entityy-1 < 0 || entityx+1 > 11) { return; }
                     if (panel.isMurderer(entityx+1, entityy-1)) {
                         dead = true;
+                        System.out.println("move-to is murderer");
                         return;
                     }
-                   System.out.println("E");
-                    y--;
-                    x++;
+                    entityy--;
+                    entityx++;
                     break;
                 case A:
-                    if (x-1 < 0) { return; }
-                    if (panel.isMurderer(x-1, y)) {
+                	System.out.println("A");
+                    if (entityx-1 < 0) {System.out.println(entityx+" "+entityy); return; }
+                    if (panel.isMurderer(entityx-1, entityy)) {
                         dead = true;
+                        System.out.println("murderer");
                         return;
                     }
-                    x--;
+                    entityx--;
+                    System.out.println("end of A: "+entityx+" "+entityy);
+                    
                     break;
                 case S:
-                   System.out.println("s");
-                    if (panel.isMurderer(x, y)) {
+                   System.out.println("S");
+                    if (panel.isMurderer(entityx, entityy)) {
                         dead = true;
                     }
                     break;
                 case D:
-                    if (x+1 > 11) { return; }
-                    if (panel.isMurderer(x+1, y)) {
+                    System.out.println("D");
+                    if (entityx+1 > 11) { return; }
+                    if (panel.isMurderer(entityx+1, entityy)) {
                         dead = true;
                         return;
                     }
-                    x++;
-                    System.out.println("D");
+                    entityx++;
+
                     break;
                 case Z:
-                    if (y+1 > 11 || x-1 < 0) { return; }
-                    if (panel.isMurderer(x-1, y+1)) {
+                    System.out.println("Z");
+                    if (entityy+1 > 11 || entityx-1 < 0) { return; }
+                    if (panel.isMurderer(entityx-1, entityy+1)) {
                         dead = true;
                         return;
                     }
-                    y++;
-                    x--;
+                    entityy++;
+                    entityx--;
                     break;
                 case X:
-                    if (y+1 > 11) { return; }
-                    if (panel.isMurderer(x, y+1)) {
+                    System.out.println("X");
+                    if (entityy+1 > 11) { return; }
+                    if (panel.isMurderer(entityx, entityy+1)) {
                         dead = true;
                         return;
                     }
-                    y++;
+                    entityy++;
                     break;
                 case C:
-                    if (x+1 > 11 || y+1 > 11) { return; }
-                    if (panel.isMurderer(x+1, y+1)) {
+                    System.out.println("C");
+                    if (entityx+1 > 11 || entityy+1 > 11) { return; }
+                    if (panel.isMurderer(entityx+1, entityy+1)) {
                         dead = true;
                         return;
                     }
-                    y++;
-                    x++;
+                    entityy++;
+                    entityx++;
                     break;
                 case J:
                     System.out.println("J");
@@ -258,11 +257,13 @@ public class Player extends LivingEntity {
                         newx = rand.nextInt(10) + 1;
                         newy = rand.nextInt(10) + 1;
                     } while (panel.isFence(newx, newy));
-                    x = newx;
-                    y = newy;
-                    if (panel.isMurderer(x, y)) {
+                    entityx = newx;
+                    entityy = newy;
+                    action = false;
+                    if (panel.isMurderer(entityx, entityy)) {
                         dead = true;
                     }
+                    
                     break;
                 default:
                     System.out.println("weirdness just happened (somehow through keybindings a \"default\" key was pressed. Player)");
