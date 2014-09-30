@@ -149,7 +149,6 @@ public class Panel extends JPanel {
 
         for (int x = 0; x < Main.board_dim_x; x++) {
             for (int y = 0; y < Main.board_dim_y; y++) {
-            	if (cells.get(x).get(y).getEntity() instanceof Fence) System.out.println("fence: "+x+", "+y);
             	/*Updating Mhos and fences*/
 //                if (prev_entities.get(x).get(y) instanceof Mho && turn == Turn.ENEMY && !entities.get(x).get(y).isUpdated()) {
 //                    entities.get(x).get(y).setUpdated(true);
@@ -267,7 +266,6 @@ public class Panel extends JPanel {
             System.out.println("restart");
             for (int x = 1; x < 11; x++) {
                 for (int y = 1; y < 11; y++) {
-//                    entities.get(x).set(y, new Entity(x, y));
                 	cells.get(x).get(y).setEntity(new Entity());
                 }
             }

@@ -26,7 +26,6 @@ public class Player extends LivingEntity {
      * Whether the user has made an action yet
      */
     private boolean action = false;
-
     /**
      * Returns action
      * @return
@@ -34,7 +33,6 @@ public class Player extends LivingEntity {
     public boolean getAction() {
         return action;
     }
-
     /**
      * Sets action
      * @param action
@@ -100,19 +98,17 @@ public class Player extends LivingEntity {
     /**
      * int x: player tracks its own position
      */
-    int x;
+    int entityx;
     
     /**
      * int y: player tracks its own position
      */
-    int y;
+    int entityy;
     
     /**
      * Constructor of Player class
      * Binds actions to keys
      * @param panel
-     * @param x
-     * @param y
      */
     public Player(Panel panel) {
         requestFocusInWindow();
@@ -177,69 +173,85 @@ public class Player extends LivingEntity {
             action = true;
             switch (key) {
                 case Q:
-                    System.out.println("Q");
-                    y--;
-                    x--;
-                    if (panel.isMurderer(x, y)) {
+                    if (entityx-1 < 0 || entityy-1 < 0) { return; }
+                    if (panel.isMurderer(entityx-1, entityy-1)) {
                         dead = true;
+                        return;
                     }
+                    System.out.println("Q");
+                    entityy--;
+                    entityx--;
                     break;
                 case W:
-                    y--;
-                    if (panel.isMurderer(x, y)) {
+                    if (entityy-1 < 0) { return; }
+                    if (panel.isMurderer(entityx, entityy-1)) {
                         dead = true;
+                        return;
                     }
+                    System.out.println("w");
+                    entityy--;
                     break;
                 case E:
-                   // System.out.println("E");
+                    if (entityy-1 < 0 || entityx+1 > 11) { return; }
+                    if (panel.isMurderer(entityx+1, entityy-1)) {
+                        dead = true;
+                        return;
+                    }
+                   System.out.println("E");
                     y--;
                     x++;
-                    if (panel.isMurderer(x, y)) {
-                        dead = true;
-                    }
                     break;
                 case A:
-                    x--;
-                    if (panel.isMurderer(x, y)) {
+                    if (x-1 < 0) { return; }
+                    if (panel.isMurderer(x-1, y)) {
                         dead = true;
+                        return;
                     }
+                    x--;
                     break;
                 case S:
-                   // System.out.println("s");
+                   System.out.println("s");
                     if (panel.isMurderer(x, y)) {
                         dead = true;
                     }
                     break;
                 case D:
-                    x++;
-                    if (panel.isMurderer(x, y)) {
+                    if (x+1 > 11) { return; }
+                    if (panel.isMurderer(x+1, y)) {
                         dead = true;
+                        return;
                     }
-                   // System.out.println("D");
+                    x++;
+                    System.out.println("D");
                     break;
                 case Z:
+                    if (y+1 > 11 || x-1 < 0) { return; }
+                    if (panel.isMurderer(x-1, y+1)) {
+                        dead = true;
+                        return;
+                    }
                     y++;
                     x--;
-                    if (panel.isMurderer(x, y)) {
-                        dead = true;
-                    }
                     break;
                 case X:
-                    y++;
-                    if (panel.isMurderer(x, y)) {
+                    if (y+1 > 11) { return; }
+                    if (panel.isMurderer(x, y+1)) {
                         dead = true;
+                        return;
                     }
+                    y++;
                     break;
                 case C:
+                    if (x+1 > 11 || y+1 > 11) { return; }
+                    if (panel.isMurderer(x+1, y+1)) {
+                        dead = true;
+                        return;
+                    }
                     y++;
                     x++;
-                    if (panel.isMurderer(x, y)) {
-                        dead = true;
-                    }
-                    
                     break;
                 case J:
-                   // System.out.println("J");
+                    System.out.println("J");
                     Random rand = new Random();
                     int newx, newy;
                     do {
