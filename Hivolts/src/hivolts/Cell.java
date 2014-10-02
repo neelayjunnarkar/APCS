@@ -56,7 +56,8 @@ public class Cell extends JComponent {
 
     public void update() {
         entity.update(x, y);
-      //  panel.getNextCells().get(entity.getEntityX()).get(entity.getEntityY()).setEntity(entity);
+        panel.getCells().get(entity.getEntityX()).get(entity.getEntityY()).setEntity(entity);
+
     }
 
     public void draw(Graphics g) {

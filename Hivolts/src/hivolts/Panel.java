@@ -160,51 +160,10 @@ public class Panel extends JPanel {
         for (int x = 0; x < Main.board_dim_x; x++) {
             for (int y = 0; y < Main.board_dim_y; y++) {
             	cells.get(x).get(y).update();
-            	/*Updating Mhos and fences*/
-//                if (prev_entities.get(x).get(y) instanceof Mho && turn == Turn.ENEMY && !entities.get(x).get(y).isUpdated()) {
-//                    entities.get(x).get(y).setUpdated(true);
-//                    entities.get(x).get(y).update(x, y);
-//                    updated_mhos++;
-//                    if (updated_mhos == total_mhos) {
-//                        updated_mhos = 0;
-//                        turn = Turn.PLAYER;
-//                    }
-//                }
-                /*Updating Player*/
-//                if (turn == Turn.PLAYER && !player.isUpdated()) {
-//                    player.setUpdated(true);
-//                    player.update(x, y);
-//                    if (player.getAction()) {
-//                        player.setAction(false);
-//                        turn = Turn.ENEMY;
-//                    }
-//                    if (player.dead) {
-//                        System.out.println("player dead");
-//                    }
-//                }
-//
-//                /*Death Updating*/
-//                if (prev_entities.get(x).get(y) instanceof LivingEntity) {
-//                    if (((LivingEntity) entities.get(x).get(y)).isDead()) {
-//                        if (entities.get(x).get(y) instanceof Mho) {
-//                            total_mhos--;
-//                        }
-//                        entities.get(x).set(y, new Entity(x, y));
-//                    }
-//                }
-
-//                prev_entities = entities;
+            	
+            	cells.get(x).get(y).draw(g);
             }
         }
-        
-        cells = next_cells;
-        cleanBoard(next_cells);
-        for (int x = 0; x < Main.board_dim_x; x++) {
-            for (int y = 0; y < Main.board_dim_y; y++) {
-                cells.get(x).get(y).draw(g);
-            }
-        }
-        
         
         
     }
