@@ -61,6 +61,7 @@ public class Panel extends JPanel {
      */
     int updated_mhos = 0;
 
+    Color backgroundColor = new Color(232, 139, 55, 15);
     /**
      * The constructor for Panel
      * Spawns all entities
@@ -87,9 +88,14 @@ public class Panel extends JPanel {
     }
     
     private void cleanBoard(ArrayList<ArrayList<Cell>> board) {
-    	for (int x = 1; x < 11; x++) {
-            for (int y = 1; y < 11; y++) {
-            	board.get(x).get(y).setEntity(new Entity(x, y));
+ 
+    	for (int x = 0; x < 12; x++) {
+            for (int y = 0; y < 12; y++) {
+            	if (y == 0 || x == 0 || y == 11 || x == 11) {
+            		cells.get(x).get(y).setEntity(new Fence(x, y));
+            	} else {
+            		board.get(x).get(y).setEntity(new Entity(x, y));
+            	}
             }
         }
     }
@@ -124,7 +130,7 @@ public class Panel extends JPanel {
         } while (isOccupied(x, y));
         cells.get(x).get(y).setEntity(new Player(this, x, y));
         player = (Player) cells.get(x).get(y).getEntity();
-
+        System.out.println("player init pos: "+player.getEntityX()+" "+player.getEntityY());
         prev_cells = cells;
         
     }
@@ -144,11 +150,19 @@ public class Panel extends JPanel {
                 updateGame(g);
                 break;
             case GAMEOVER:
+            	displayGameOver(g);
                 break;
         }
     }
 
-    /**
+    private void displayGameOver(Graphics g) {
+		Graphics2D g2d = (Graphics2D)g.create();
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		g2d.setFont(new Font("Consolas", Font.PLAIN, 20));
+		g2d.drawString("Game Over :( :( :( :( :( :(", (float)(Main.width/2.0)-(27*5), (float)100.0); 
+	}
+    
+	/**
      * When in-game, this is called and updates the game (all entities, turn...)
      * @param g Graphics
      */
@@ -156,17 +170,35 @@ public class Panel extends JPanel {
         if (screen != Screen.GAME) {
             turn = Turn.NONE;
         }
-
+        
+        g.setColor(backgroundColor);
+        g.fillRect(0, 0, Main.width, Main.height);
+        
         for (int x = 0; x < Main.board_dim_x; x++) {
             for (int y = 0; y < Main.board_dim_y; y++) {
-                if (turn == Turn.PLAYER) {
-
+                if (turn == Turn.PLAYER) {	
+                	if (cells.get(x).get(y).getEntity() instanceof Player) {
+                		cells.get(x).get(y).update();
+                		if (((Player)(cells.get(x).get(y).getEntity())).getAction()) {
+                			turn = Turn.ENEMY;
+                		}
+                		if (((Player)(cells.get(x).get(y).getEntity())).isDead()) {
+                			screen = Screen.GAMEOVER;
+                		}
+                	}   		
                 } else if (turn == Turn.ENEMY) {
-
+                //	System.out.println("enemy turn");
+                	if (updated_mhos == total_mhos) {
+                		turn = Turn.PLAYER;
+                		updated_mhos = 0;
+                	}
+                	if (cells.get(x).get(y).getEntity() instanceof Mho) {
+                    	cells.get(x).get(y).update();
+                    	updated_mhos++;
+                	}
+                	System.out.println(updated_mhos);
                 }
-            	cells.get(x).get(y).update();
             	
-
             }
         }
 
@@ -175,7 +207,6 @@ public class Panel extends JPanel {
                 c.draw(g);
             }
         }
-        
         
     }
 
@@ -234,7 +265,16 @@ public class Panel extends JPanel {
      * @return returns player x-coord
      */
     public int getPlayerX() {
-        return player.getX();
+    	int x = 0, y = 0;
+    	for (ArrayList<Cell> a : cells) {
+    		for (Cell c : a) {
+    			if (c.getEntity() instanceof Player) {
+    				x = c.getX();
+    				y = c.getY();
+    			}
+    		}
+    	}
+        return x;
     }
 
     /**
@@ -242,7 +282,16 @@ public class Panel extends JPanel {
      * @return returns player y-coord
      */
     public int getPlayerY() {
-        return player.getY();
+    	int x = 0, y = 0;
+    	for (ArrayList<Cell> a : cells) {
+    		for (Cell c : a) {
+    			if (c.getEntity() instanceof Player) {
+    				x = c.getX();
+    				y = c.getY();
+    			}
+    		}
+    	}
+        return y;
     }
 
     private class Restart extends AbstractAction {
@@ -255,7 +304,12 @@ public class Panel extends JPanel {
             player.dead = false;
             updated_mhos = 0;
             total_mhos = 12;
+            screen = screen.GAME;
         }
     }
+
+	public Player getPlayer() {
+		return player;
+	}
 
 }

@@ -18,12 +18,7 @@ public class Mho extends LivingEntity {
      */
     Panel panel;
 
-    enum Direction {
-        NONE, UP, DOWN, LEFT, RIGHT,UP_LEFT, DOWN_LEFT, UP_RIGHT, DOWN_RIGHT
-    }
-    private Direction dir = Direction.NONE;
-    public Direction getDir() { return dir; }
-    public void setDir(Direction dir) { this.dir = dir; }
+
 
     /**
      * The Mho constructor
@@ -42,7 +37,11 @@ public class Mho extends LivingEntity {
      * Moves Mho based on layout of board and location of player
      */
     public void update(int x, int y) {
-
+    	System.out.println("updated mho");
+    	
+    	if (entityx == panel.getPlayerX() && entityy == panel.getPlayerY()) return;
+    	
+    	
     }
 
     /**

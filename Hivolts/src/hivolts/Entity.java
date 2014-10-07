@@ -12,11 +12,11 @@ import javax.swing.JComponent;
 public class Entity extends JComponent {
 
 	protected int entityx, entityy;
+	public void setEntityX(int i) { entityx = i; }
+	public void setEntityY(int i) { entityy = i; }
 	public int getEntityX() { return entityx; }
 	public int getEntityY() { return entityy; }
 
-	
-	
     /**
      * The constructor for Entity
      */
@@ -43,6 +43,11 @@ public class Entity extends JComponent {
     public void draw(Graphics g, int x, int y) {
 
     }
-
+    enum Direction {
+        NONE, UP, DOWN, LEFT, RIGHT,UP_LEFT, DOWN_LEFT, UP_RIGHT, DOWN_RIGHT
+    }
+    private Direction dir = Direction.NONE;
+    public Direction getDir() { return dir; }
+    public void setDir(Direction dir) { this.dir = dir; }
 
 }
