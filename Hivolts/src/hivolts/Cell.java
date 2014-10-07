@@ -24,8 +24,8 @@ public class Cell extends JComponent {
     public Entity getEntity() {
         return entity;
     }
-    public void setEntity(Entity entity) {
-        this.entity = entity;
+    public Entity setEntity(Entity entity) {
+        return (this.entity = entity);
     }
     public void swap(Cell cell) {
         Entity otherentity = cell.getEntity();
@@ -56,8 +56,11 @@ public class Cell extends JComponent {
 
     public void update() {
         entity.update(x, y);
-        panel.getCells().get(entity.getEntityX()).get(entity.getEntityY()).setEntity(entity);
-
+        /*To Enable Snake: remove if statement and 'entity = new Entity(x, y);' (and follow all other To Enable Snake statements)*/
+        if (entity.getEntityX() != x || entity.getEntityY() != y) {
+            panel.getCells().get(entity.getEntityX()).get(entity.getEntityY()).setEntity(entity);
+            entity = new Entity(x, y);
+        }
     }
 
     public void draw(Graphics g) {

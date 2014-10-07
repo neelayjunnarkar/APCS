@@ -163,7 +163,7 @@ public class Player extends LivingEntity {
             action = true;
             switch (key) {
                 case Q:
-                    System.out.println("Q");
+                    //System.out.println("Q");
                     if (entityx-1 < 0 || entityy-1 < 0) { return; }
                     if (panel.isMurderer(entityx-1, entityy-1)) {
                         dead = true;
@@ -173,7 +173,7 @@ public class Player extends LivingEntity {
                     entityx--;
                     break;
                 case W:
-                    System.out.println("W");
+                    //System.out.println("W");
                     if (entityy-1 < 0) { return; }
                     if (panel.isMurderer(entityx, entityy-1)) {
                         dead = true;
@@ -182,7 +182,7 @@ public class Player extends LivingEntity {
                     entityy--;
                     break;
                 case E:
-                    System.out.println("E");
+                   // System.out.println("E");
                     if (entityy-1 < 0 || entityx+1 > 11) { return; }
                     if (panel.isMurderer(entityx+1, entityy-1)) {
                         dead = true;
@@ -193,7 +193,7 @@ public class Player extends LivingEntity {
                     entityx++;
                     break;
                 case A:
-                	System.out.println("A");
+                	//System.out.println("A");
                     if (entityx-1 < 0) {System.out.println(entityx+" "+entityy); return; }
                     if (panel.isMurderer(entityx-1, entityy)) {
                         dead = true;
@@ -201,17 +201,17 @@ public class Player extends LivingEntity {
                         return;
                     }
                     entityx--;
-                    System.out.println("end of A: "+entityx+" "+entityy);
+                   // System.out.println("end of A: "+entityx+" "+entityy);
                     
                     break;
                 case S:
-                   System.out.println("S");
+                  // System.out.println("S");
                     if (panel.isMurderer(entityx, entityy)) {
                         dead = true;
                     }
                     break;
                 case D:
-                    System.out.println("D");
+                   // System.out.println("D");
                     if (entityx+1 > 11) { return; }
                     if (panel.isMurderer(entityx+1, entityy)) {
                         dead = true;
@@ -221,7 +221,7 @@ public class Player extends LivingEntity {
 
                     break;
                 case Z:
-                    System.out.println("Z");
+                  //  System.out.println("Z");
                     if (entityy+1 > 11 || entityx-1 < 0) { return; }
                     if (panel.isMurderer(entityx-1, entityy+1)) {
                         dead = true;
@@ -231,7 +231,7 @@ public class Player extends LivingEntity {
                     entityx--;
                     break;
                 case X:
-                    System.out.println("X");
+                  //  System.out.println("X");
                     if (entityy+1 > 11) { return; }
                     if (panel.isMurderer(entityx, entityy+1)) {
                         dead = true;
@@ -240,7 +240,7 @@ public class Player extends LivingEntity {
                     entityy++;
                     break;
                 case C:
-                    System.out.println("C");
+                   // System.out.println("C");
                     if (entityx+1 > 11 || entityy+1 > 11) { return; }
                     if (panel.isMurderer(entityx+1, entityy+1)) {
                         dead = true;
@@ -250,7 +250,7 @@ public class Player extends LivingEntity {
                     entityx++;
                     break;
                 case J:
-                    System.out.println("J");
+                   // System.out.println("J");
                     Random rand = new Random();
                     int newx, newy;
                     do {

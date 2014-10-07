@@ -123,7 +123,7 @@ public class Panel extends JPanel {
             y = rand.nextInt(10) + 1;
         } while (isOccupied(x, y));
         cells.get(x).get(y).setEntity(new Player(this, x, y));
-       // player = (Player) cells.get(x).get(y).getEntity();
+        player = (Player) cells.get(x).get(y).getEntity();
 
         prev_cells = cells;
         
@@ -159,9 +159,20 @@ public class Panel extends JPanel {
 
         for (int x = 0; x < Main.board_dim_x; x++) {
             for (int y = 0; y < Main.board_dim_y; y++) {
+                if (turn == Turn.PLAYER) {
+
+                } else if (turn == Turn.ENEMY) {
+
+                }
             	cells.get(x).get(y).update();
             	
-            	cells.get(x).get(y).draw(g);
+
+            }
+        }
+
+        for (ArrayList<Cell> a : cells) {
+            for (Cell c : a) {
+                c.draw(g);
             }
         }
         
@@ -222,17 +233,17 @@ public class Panel extends JPanel {
      * Returns the player x-coordinate
      * @return returns player x-coord
      */
-//    public int getPlayerX() {
-//        return player.getX();
-//    }
+    public int getPlayerX() {
+        return player.getX();
+    }
 
     /**
      * Returns the player y-coordinate
      * @return returns player y-coord
      */
-//    public int getPlayerY() {
-//        return player.getY();
-//    }
+    public int getPlayerY() {
+        return player.getY();
+    }
 
     private class Restart extends AbstractAction {
 
@@ -241,7 +252,7 @@ public class Panel extends JPanel {
             System.out.println("restart");
             cleanBoard(cells);
             spawnEntities();
-            //player.dead = false;
+            player.dead = false;
             updated_mhos = 0;
             total_mhos = 12;
         }
