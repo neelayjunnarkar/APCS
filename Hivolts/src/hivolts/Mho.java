@@ -47,10 +47,42 @@ public class Mho extends LivingEntity {
         } else if (y == panel.getPlayerY() && x != panel.getPlayerX()) {
             entityx = (x < panel.getPlayerX()) ? x+1 : x-1;
         } else if (Math.abs(x-panel.getPlayerX()) == Math.abs(y-panel.getPlayerY())) {
-            entityx = (x < panel.getPlayerX()) ? x+1 : x-1;
-            entityy = (y < panel.getPlayerY()) ? y+1 : y-1;
+        	if (!panel.isOccupied((x < panel.getPlayerX()) ? x+1 : x-1, (y < panel.getPlayerY()) ? y+1 : y-1)) {
+	            entityx = (x < panel.getPlayerX()) ? x+1 : x-1;
+	            entityy = (y < panel.getPlayerY()) ? y+1 : y-1;
+        	}
+        } else if (Math.abs(x-panel.getPlayerX()) >= Math.abs(y-panel.getPlayerY())) {
+        	if (!panel.isOccupied((x < panel.getPlayerX()) ? x+1 : x-1, (y < panel.getPlayerY()) ? y+1 : y-1)) {
+        		entityx = (x < panel.getPlayerX()) ? x+1 : x-1;
+        	}
+        } else if (Math.abs(x-panel.getPlayerX()) <= Math.abs(y-panel.getPlayerY())) {
+        	if (!panel.isOccupied((x < panel.getPlayerX()) ? x+1 : x-1, (y < panel.getPlayerY()) ? y+1 : y-1)) {
+        		entityy = (y < panel.getPlayerY()) ? y+1 : y-1;
+        	}
         }
 
+
+        if (entityx == x && entityy == y) {
+        	if (x == panel.getPlayerX() && y != panel.getPlayerY()) {
+                entityy = (y < panel.getPlayerY()) ? y+1 : y-1;
+                System.out.println("this: " + x + ", " + y + "  player: " + panel.getPlayerX() + ", " + panel.getPlayerY());
+            } else if (y == panel.getPlayerY() && x != panel.getPlayerX()) {
+                entityx = (x < panel.getPlayerX()) ? x+1 : x-1;
+            } else if (Math.abs(x-panel.getPlayerX()) == Math.abs(y-panel.getPlayerY())) {
+            	if (!panel.isMho((x < panel.getPlayerX()) ? x+1 : x-1, (y < panel.getPlayerY()) ? y+1 : y-1)) {
+    	            entityx = (x < panel.getPlayerX()) ? x+1 : x-1;
+    	            entityy = (y < panel.getPlayerY()) ? y+1 : y-1;
+            	}
+            } else if (Math.abs(x-panel.getPlayerX()) >= Math.abs(y-panel.getPlayerY())) {
+            	if (!panel.isMho((x < panel.getPlayerX()) ? x+1 : x-1, (y < panel.getPlayerY()) ? y+1 : y-1)) {
+            		entityx = (x < panel.getPlayerX()) ? x+1 : x-1;
+            	}
+            } else if (Math.abs(x-panel.getPlayerX()) <= Math.abs(y-panel.getPlayerY())) {
+            	if (!panel.isMho((x < panel.getPlayerX()) ? x+1 : x-1, (y < panel.getPlayerY()) ? y+1 : y-1)) {
+            		entityy = (y < panel.getPlayerY()) ? y+1 : y-1;
+            	}
+            }
+        }
         if (entityx == panel.getPlayerX() && entityy == panel.getPlayerY()) panel.setGameOver();
     }
 

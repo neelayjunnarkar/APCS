@@ -29,7 +29,7 @@ public class Panel extends JPanel {
      * An enum which says which says which state the program is in--Main Menu, Game, or GameOver
      */
     private enum Screen {
-        MAIN, GAME, GAMEOVER
+        WIN, GAME, GAMEOVER
     }
 
     /**
@@ -57,7 +57,8 @@ public class Panel extends JPanel {
     /**
      * The initial amount of Mhos spawned
      */
-    int total_mhos = 12;
+    int init_mhos = 12;
+    int total_mhos = init_mhos;
 
     /**
      * Tracks how many Mhos have been updated in an update cycle
@@ -65,6 +66,9 @@ public class Panel extends JPanel {
     int updated_mhos = 0;
 
     Color backgroundColor = new Color(232, 139, 55, 15);
+    Color win_backgroundColor = new Color(236, 236, 236, 105);
+    Color gameover_backgroundColor = new Color(19, 19, 19, 60);
+    Color gameover_fontColor = new Color(0, 0, 0, 255);
 
     /**
      * The constructor for Panel
@@ -119,7 +123,7 @@ public class Panel extends JPanel {
         }
 
         /*Spawns 12 mhos randomly*/
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < init_mhos; i++) {
             do {
                 x = rand.nextInt(10) + 1;
                 y = rand.nextInt(10) + 1;
@@ -148,7 +152,8 @@ public class Panel extends JPanel {
         Graphics2D g2d = (Graphics2D) g.create();
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         switch (screen) {
-            case MAIN:
+            case WIN:
+            	displayWin(g);
                 break;
             case GAME:
                 updateGame(g);
@@ -159,12 +164,41 @@ public class Panel extends JPanel {
         }
     }
 
-    private void displayGameOver(Graphics g) {
+    private void displayWin(Graphics g) {
+    	Graphics2D g2d = (Graphics2D) g.create();
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        for (ArrayList<Cell> a : cells) {
+        	for (Cell c : a) {
+        		c.draw(g2d);
+        	}
+        }
+        g2d.setColor(win_backgroundColor);
+        g2d.fillRect(0, 0, Main.width, Main.height);
+        g2d.setColor(gameover_fontColor);
+        String gameover_msg = "You Win :) :) :) :) :) :)";
+        String restart_msg = "Hit 'R' to Restart";
+        Font gameover_font = new Font("Consolas", Font.BOLD, 20);
+        Font restart_font = new Font("Consolas", Font.PLAIN, 12);
+        g2d.setFont(gameover_font);
+        g2d.drawString(gameover_msg, (float)(-g2d.getFontMetrics(gameover_font).getStringBounds(gameover_msg, g2d).getWidth()/2.0+Main.width/2.0), (float) 100.0);
+        g2d.setFont(restart_font);
+        g2d.drawString(restart_msg, (float)(-g2d.getFontMetrics(restart_font).getStringBounds(restart_msg, g2d).getWidth()/2.0+Main.width/2.0), (float)(100+2*g2d.getFontMetrics(restart_font).getStringBounds(restart_msg, g2d).getHeight()));
+	}
+
+	private void displayGameOver(Graphics g) {
         Graphics2D g2d = (Graphics2D) g.create();
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        for (ArrayList<Cell> a : cells) {
+        	for (Cell c : a) {
+        		c.draw(g2d);
+        	}
+        }
+        g2d.setColor(gameover_backgroundColor);
+        g2d.fillRect(0, 0, Main.width, Main.height);
+        g2d.setColor(gameover_fontColor);
         String gameover_msg = "Game Over :( :( :( :( :( :(";
         String restart_msg = "Hit 'R' to Restart";
-        Font gameover_font = new Font("Consolas", Font.PLAIN, 20);
+        Font gameover_font = new Font("Consolas", Font.BOLD, 20);
         Font restart_font = new Font("Consolas", Font.PLAIN, 12);
         g2d.setFont(gameover_font);
         g2d.drawString(gameover_msg, (float)(-g2d.getFontMetrics(gameover_font).getStringBounds(gameover_msg, g2d).getWidth()/2.0+Main.width/2.0), (float) 100.0);
@@ -178,53 +212,21 @@ public class Panel extends JPanel {
      * @param g Graphics
      */
     private void updateGame(Graphics g) {
-        if (screen != Screen.GAME) {
-            turn = Turn.NONE;
-        }
-
-        g.setColor(backgroundColor);
-        g.fillRect(0, 0, Main.width, Main.height);
-
-        for (int x = 0; x < Main.board_dim_x; x++) {
-            for (int y = 0; y < Main.board_dim_y; y++) {
-                if (turn == Turn.PLAYER) {
-                    if (cells.get(x).get(y).getEntity() instanceof Player) {
-                        if (((Player) (cells.get(x).get(y).getEntity())).isDead()) {
-                            screen = Screen.GAMEOVER;
-                        }
-                        cells.get(x).get(y).update();
-                        if (((Player) (cells.get(x).get(y).getEntity())).getAction()) {
-                            turn = Turn.ENEMY;
-                            ((Player) (cells.get(x).get(y).getEntity())).setAction(false);
-                        }
-                    } else {
-                       // continue;
-                    }
-                } else if (turn == Turn.ENEMY) {
-                    //	System.out.println("enemy turn");
-
-                    if (cells.get(x).get(y).getEntity() instanceof Mho) {
-                        if (updated_mhos == total_mhos) {
-                            turn = Turn.PLAYER;
-                            updated_mhos = 0;
-                            continue;
-                        }
-                        cells.get(x).get(y).update();
-                        updated_mhos++;
-                    }
-
-                    System.out.println(updated_mhos);
-                }
-
-                cells.get(x).get(y).draw(g);
-
-            }
-        }
-
-
+      	
     }
 
-    /**
+    private int countMhos() {
+		int temp = 0;
+		for (ArrayList<Cell> a : cells) {
+			for (Cell c : a) {
+				if (c.getEntity() instanceof Mho) temp++;
+			}
+		}
+		System.out.println("n mhos: "+temp);
+		return temp;
+	}
+
+	/**
      * Returns whether location on board is an entity which kills the player
      *
      * @param x x-coord
@@ -246,6 +248,9 @@ public class Panel extends JPanel {
         return (isFence(x, y) || isPlayer(x, y) || isMho(x, y));
     }
 
+    public boolean isEmpty(int x, int y) {
+    	return (cells.get(x).get(y).getEntity()) instanceof Entity;
+    }
     /**
      * Returns whether location on board is a fence
      *
@@ -332,6 +337,7 @@ public class Panel extends JPanel {
             updated_mhos = 0;
             total_mhos = 12;
             screen = screen.GAME;
+            update(getGraphics());
         }
     }
 

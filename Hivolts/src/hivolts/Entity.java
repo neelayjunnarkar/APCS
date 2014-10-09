@@ -29,6 +29,10 @@ public class Entity extends JComponent {
         return entityy;
     }
 
+    private boolean updated = false;
+    public boolean getUpdated() { return updated; }
+    public void setUpdated(boolean bool) { updated = bool; }
+    
     /**
      * The constructor for Entity
      */
@@ -56,20 +60,6 @@ public class Entity extends JComponent {
      */
     public void draw(Graphics g, int x, int y) {
 
-    }
-
-    enum Direction {
-        NONE, UP, DOWN, LEFT, RIGHT, UP_LEFT, DOWN_LEFT, UP_RIGHT, DOWN_RIGHT
-    }
-
-    private Direction dir = Direction.NONE;
-
-    public Direction getDir() {
-        return dir;
-    }
-
-    public void setDir(Direction dir) {
-        this.dir = dir;
     }
 
 }
