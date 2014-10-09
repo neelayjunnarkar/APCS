@@ -5,7 +5,7 @@ import java.util.Random;
 
 /**
  * @author Neelay Junnarkar
- * The Fence class is the sessile Entity class, and kills Players
+ *         The Fence class is the sessile Entity class, and kills Players
  */
 public class Fence extends Entity {
 
@@ -18,7 +18,7 @@ public class Fence extends Entity {
      * The fence constructor
      */
     public Fence(int x, int y) {
-    	super(x, y);
+        super(x, y);
     }
 
 
@@ -32,6 +32,7 @@ public class Fence extends Entity {
 
     /**
      * The draw method for Fences
+     *
      * @param g Graphics g
      * @param x x-coord on board
      * @param y y-coord on board

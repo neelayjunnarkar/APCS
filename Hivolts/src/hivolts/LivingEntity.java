@@ -2,7 +2,7 @@ package hivolts;
 
 /**
  * @author Neelay Junnarkar
- * Living Entities are entities which have a life boolean value
+ *         Living Entities are entities which have a life boolean value
  */
 public class LivingEntity extends Entity {
 
@@ -13,6 +13,7 @@ public class LivingEntity extends Entity {
 
     /**
      * Returns whether is dead or not
+     *
      * @return
      */
     public boolean isDead() {
@@ -21,18 +22,20 @@ public class LivingEntity extends Entity {
 
     /**
      * Sets the death value
+     *
      * @param dead
      */
     public void setDead(boolean dead) {
-    	this.dead = dead;
+        this.dead = dead;
     }
 
     /**
      * Constructor for LivingEntity
+     *
      * @param x
      * @param y
      */
     public LivingEntity(int x, int y) {
-    	super(x, y);
+        super(x, y);
     }
 }

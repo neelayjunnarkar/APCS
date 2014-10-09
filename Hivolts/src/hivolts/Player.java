@@ -8,7 +8,7 @@ import java.util.Random;
 
 /**
  * @author Neelay Junnarkar
- * Class Player is the player, the user, and extends LivingEntity
+ *         Class Player is the player, the user, and extends LivingEntity
  */
 public class Player extends LivingEntity {
 
@@ -26,15 +26,19 @@ public class Player extends LivingEntity {
      * Whether the user has made an action yet
      */
     private boolean action = false;
+
     /**
      * Returns action
+     *
      * @return
      */
     public boolean getAction() {
         return action;
     }
+
     /**
      * Sets action
+     *
      * @param action
      */
     public void setAction(boolean action) {
@@ -64,6 +68,7 @@ public class Player extends LivingEntity {
 
         /**
          * returns keystroke
+         *
          * @return
          */
         public KeyStroke getKeyStroke() {
@@ -71,12 +76,13 @@ public class Player extends LivingEntity {
         }
 
         /**
-         *String
+         * String
          */
         private String str;
 
         /**
          * Returns string
+         *
          * @return
          */
         public String getString() {
@@ -85,6 +91,7 @@ public class Player extends LivingEntity {
 
         /**
          * Constructor of enum Key
+         *
          * @param keyStroke
          * @param str
          */
@@ -98,10 +105,11 @@ public class Player extends LivingEntity {
     /**
      * Constructor of Player class
      * Binds actions to keys
+     *
      * @param panel
      */
     public Player(Panel panel, int x, int y) {
-    	super(x, y);
+        super(x, y);
         requestFocusInWindow();
         this.panel = panel;
 
@@ -123,16 +131,17 @@ public class Player extends LivingEntity {
 
     /**
      * Draws player at location on map depending on x and y coordinates
+     *
      * @param g
      */
     @Override
     public void draw(Graphics g, int x, int y) {
         super.paintComponent(g);
         if (!dead) {
-	        Graphics2D g2d = (Graphics2D) g.create();
-	        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-	        g2d.setColor(playerColor);
-	        g2d.fillOval((x * Main.cell_width + Main.cell_sep * x), (y * Main.cell_height + Main.cell_sep * y), Main.cell_width, Main.cell_height);
+            Graphics2D g2d = (Graphics2D) g.create();
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            g2d.setColor(playerColor);
+            g2d.fillOval((x * Main.cell_width + Main.cell_sep * x), (y * Main.cell_height + Main.cell_sep * y), Main.cell_width, Main.cell_height);
         }
     }
 
@@ -148,6 +157,7 @@ public class Player extends LivingEntity {
 
         /**
          * Constructor for KeyAction
+         *
          * @param key
          */
         public KeyAction(Key key) {
@@ -156,6 +166,7 @@ public class Player extends LivingEntity {
 
         /**
          * Where action as a result of keyinput is resolved
+         *
          * @param e
          */
         @Override
@@ -164,8 +175,10 @@ public class Player extends LivingEntity {
             switch (key) {
                 case Q:
                     //System.out.println("Q");
-                    if (entityx-1 < 0 || entityy-1 < 0) { return; }
-                    if (panel.isMurderer(entityx-1, entityy-1)) {
+                    if (entityx - 1 < 0 || entityy - 1 < 0) {
+                        return;
+                    }
+                    if (panel.isMurderer(entityx - 1, entityy - 1)) {
                         dead = true;
                         return;
                     }
@@ -174,17 +187,21 @@ public class Player extends LivingEntity {
                     break;
                 case W:
                     //System.out.println("W");
-                    if (entityy-1 < 0) { return; }
-                    if (panel.isMurderer(entityx, entityy-1)) {
+                    if (entityy - 1 < 0) {
+                        return;
+                    }
+                    if (panel.isMurderer(entityx, entityy - 1)) {
                         dead = true;
                         return;
                     }
                     entityy--;
                     break;
                 case E:
-                   // System.out.println("E");
-                    if (entityy-1 < 0 || entityx+1 > 11) { return; }
-                    if (panel.isMurderer(entityx+1, entityy-1)) {
+                    // System.out.println("E");
+                    if (entityy - 1 < 0 || entityx + 1 > 11) {
+                        return;
+                    }
+                    if (panel.isMurderer(entityx + 1, entityy - 1)) {
                         dead = true;
                         System.out.println("move-to is murderer");
                         return;
@@ -193,27 +210,32 @@ public class Player extends LivingEntity {
                     entityx++;
                     break;
                 case A:
-                	//System.out.println("A");
-                    if (entityx-1 < 0) {System.out.println(entityx+" "+entityy); return; }
-                    if (panel.isMurderer(entityx-1, entityy)) {
+                    //System.out.println("A");
+                    if (entityx - 1 < 0) {
+                        System.out.println(entityx + " " + entityy);
+                        return;
+                    }
+                    if (panel.isMurderer(entityx - 1, entityy)) {
                         dead = true;
                         System.out.println("murderer");
                         return;
                     }
                     entityx--;
-                   // System.out.println("end of A: "+entityx+" "+entityy);
-                    
+                    // System.out.println("end of A: "+entityx+" "+entityy);
+
                     break;
                 case S:
-                  // System.out.println("S");
+                    // System.out.println("S");
                     if (panel.isMurderer(entityx, entityy)) {
                         dead = true;
                     }
                     break;
                 case D:
-                   // System.out.println("D");
-                    if (entityx+1 > 11) { return; }
-                    if (panel.isMurderer(entityx+1, entityy)) {
+                    // System.out.println("D");
+                    if (entityx + 1 > 11) {
+                        return;
+                    }
+                    if (panel.isMurderer(entityx + 1, entityy)) {
                         dead = true;
                         return;
                     }
@@ -221,9 +243,11 @@ public class Player extends LivingEntity {
 
                     break;
                 case Z:
-                  //  System.out.println("Z");
-                    if (entityy+1 > 11 || entityx-1 < 0) { return; }
-                    if (panel.isMurderer(entityx-1, entityy+1)) {
+                    //  System.out.println("Z");
+                    if (entityy + 1 > 11 || entityx - 1 < 0) {
+                        return;
+                    }
+                    if (panel.isMurderer(entityx - 1, entityy + 1)) {
                         dead = true;
                         return;
                     }
@@ -231,18 +255,22 @@ public class Player extends LivingEntity {
                     entityx--;
                     break;
                 case X:
-                  //  System.out.println("X");
-                    if (entityy+1 > 11) { return; }
-                    if (panel.isMurderer(entityx, entityy+1)) {
+                    //  System.out.println("X");
+                    if (entityy + 1 > 11) {
+                        return;
+                    }
+                    if (panel.isMurderer(entityx, entityy + 1)) {
                         dead = true;
                         return;
                     }
                     entityy++;
                     break;
                 case C:
-                   // System.out.println("C");
-                    if (entityx+1 > 11 || entityy+1 > 11) { return; }
-                    if (panel.isMurderer(entityx+1, entityy+1)) {
+                    // System.out.println("C");
+                    if (entityx + 1 > 11 || entityy + 1 > 11) {
+                        return;
+                    }
+                    if (panel.isMurderer(entityx + 1, entityy + 1)) {
                         dead = true;
                         return;
                     }
@@ -250,7 +278,7 @@ public class Player extends LivingEntity {
                     entityx++;
                     break;
                 case J:
-                   // System.out.println("J");
+                    // System.out.println("J");
                     Random rand = new Random();
                     int newx, newy;
                     do {
@@ -263,7 +291,7 @@ public class Player extends LivingEntity {
                     if (panel.isMurderer(entityx, entityy)) {
                         dead = true;
                     }
-                    
+
                     break;
                 default:
                     System.out.println("weirdness just happened (somehow through keybindings a \"default\" key was pressed. Player)");

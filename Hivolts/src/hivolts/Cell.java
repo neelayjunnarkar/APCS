@@ -9,24 +9,29 @@ import java.awt.*;
 public class Cell extends JComponent {
 
     private int y;
+
     public int getY() {
         return y;
     }
 
     private int x;
+
     public int getX() {
         return x;
     }
-    
+
     Panel panel;
 
     private Entity entity;
+
     public Entity getEntity() {
         return entity;
     }
+
     public Entity setEntity(Entity entity) {
         return (this.entity = entity);
     }
+
     public void swap(Cell cell) {
         Entity otherentity = cell.getEntity();
         cell.setEntity(entity);
@@ -34,24 +39,26 @@ public class Cell extends JComponent {
     }
 
     private boolean updated = false;
+
     public boolean isUpdated() {
         return updated;
     }
+
     public void setUpdated(boolean updated) {
         this.updated = updated;
     }
 
 
     public Cell(Panel panel, int x, int y) {
-    	this(panel, x, y, new Entity(x, y));
+        this(panel, x, y, new Entity(x, y));
     }
-    
+
     public Cell(Panel panel, int x, int y, Entity entity) {
-    	this.panel = panel;
+        this.panel = panel;
         this.x = x;
         this.y = y;
         this.entity = entity;
-        System.out.println("cell x, y: "+x+" "+y);
+        System.out.println("cell x, y: " + x + " " + y);
     }
 
     public void update() {
