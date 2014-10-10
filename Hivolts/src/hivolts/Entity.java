@@ -11,32 +11,39 @@ import javax.swing.JComponent;
  */
 public class Entity extends JComponent {
 
+    /**
+     * The enitity's self-tracked coordinates
+     */
     protected int entityx, entityy;
 
+    /**
+     * Sets the entity's x-coord
+     * @param i the new x-coord
+     */
     public void setEntityX(int i) {
         entityx = i;
     }
 
+    /**
+     * Sets the entity's y-coord
+     * @param i the new y-coord
+     */
     public void setEntityY(int i) {
         entityy = i;
     }
 
+    /**
+     * @return Returns the entity's x-coord
+     */
     public int getEntityX() {
         return entityx;
     }
 
+    /**
+     * @return Returns the entity's y-coord
+     */
     public int getEntityY() {
         return entityy;
-    }
-
-    private boolean updated = false;
-
-    public boolean getUpdated() {
-        return updated;
-    }
-
-    public void setUpdated(boolean bool) {
-        updated = bool;
     }
 
     /**

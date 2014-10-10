@@ -65,6 +65,7 @@ public class Panel extends JPanel {
      */
     int updated_mhos = 0;
 
+   /*The specific colours fo each use. backgrounds/fonts*/
     Color backgroundColor = new Color(255, 255, 255, 255);
     Color win_backgroundColor = new Color(236, 236, 236, 105);
     Color gameover_backgroundColor = new Color(19, 19, 19, 60);
@@ -72,6 +73,7 @@ public class Panel extends JPanel {
     Color win_fontColor = new Color(0, 0, 0, 255);
     Color main_color = new Color(0, 0, 0, 255);
 
+    /*Text for main, gameover, and win screens */
     String win_msg = "You Win :) :) :) :) :) :)";
     String replay_msg = "Hit 'R' to Replay";
     String gameover_msg = "Game Over :( :( :( :( :( :(";
@@ -80,6 +82,7 @@ public class Panel extends JPanel {
     String author_msg = "by Neelay Junnarkar";
     String start_msg = "Hit \"Enter\" to begin playing!";
 
+    /*Font styles for each specific use on main, gameover, and win screens*/
     Font gameover_font = new Font("Consolas", Font.BOLD, 30);
     Font restart_font = new Font("Consolas", Font.PLAIN, 18);
     Font win_font = new Font("Consolas", Font.BOLD, 30);
@@ -101,6 +104,7 @@ public class Panel extends JPanel {
         getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "Enter");
         getActionMap().put("Enter", new Enter());
 
+        /*Init board to a ring of fences around a box of emptyness*/
         for (int x = 0; x < 12; x++) {
             cells.add(new ArrayList<Cell>(12));
             for (int y = 0; y < 12; y++) {
@@ -115,6 +119,10 @@ public class Panel extends JPanel {
         spawnEntities();
     }
 
+    /**
+     * Takes a board and wipes it except for ring of fences
+     * @param board The 2d array of Cells that is the board to be cleaned
+     */
     private void cleanBoard(ArrayList<ArrayList<Cell>> board) {
 
         for (int x = 0; x < 12; x++) {
@@ -128,12 +136,31 @@ public class Panel extends JPanel {
         }
     }
 
+    /**
+     * Spawns all entites on a clean board
+     */
     private void spawnEntities() {
 
         Random rand = new Random();
         int x, y;
 
         /*Spawns 20 fences randomly*/
+        spawnFences(rand);
+
+        /*Spawns 12 mhos randomly*/
+        spawnMhos(rand);
+
+        /*Spawns the player randomly*/
+        spawnPlayer(rand);
+
+    }
+
+    /**
+     * Spawns central fences on board
+     * @param rand Random number generator
+     */
+    private void spawnFences(Random rand) {
+        int x, y;
         for (int i = 0; i < 20; i++) {
             do {
                 x = rand.nextInt(10) + 1;
@@ -141,8 +168,14 @@ public class Panel extends JPanel {
             } while (isOccupied(x, y));
             cells.get(x).get(y).setEntity(new Fence(x, y));
         }
+    }
 
-        /*Spawns 12 mhos randomly*/
+    /**
+     * Spawns Mhos on board
+     * @param rand Random number generator
+     */
+    private void spawnMhos(Random rand) {
+        int x, y;
         for (int i = 0; i < init_mhos; i++) {
             do {
                 x = rand.nextInt(10) + 1;
@@ -150,8 +183,14 @@ public class Panel extends JPanel {
             } while (isOccupied(x, y));
             cells.get(x).get(y).setEntity(new Mho(this, x, y));
         }
+    }
 
-        /*Spawns the player randomly*/
+    /**
+     * Spawns player on board
+     * @param rand Random number generator
+     */
+    private void spawnPlayer(Random rand) {
+        int x, y;
         do {
             x = rand.nextInt(10) + 1;
             y = rand.nextInt(10) + 1;
@@ -159,7 +198,6 @@ public class Panel extends JPanel {
         cells.get(x).get(y).setEntity(new Player(this, x, y));
         player = (Player) cells.get(x).get(y).getEntity();
         System.out.println("player init pos: " + player.getEntityX() + " " + player.getEntityY());
-
     }
 
     /**
@@ -187,6 +225,10 @@ public class Panel extends JPanel {
         }
     }
 
+    /**
+     * The paint method for screen MAIN
+     * @param g Graphics
+     */
     private void displayMain(Graphics g) {
 
         Graphics2D g2d = (Graphics2D) g.create();
@@ -207,6 +249,10 @@ public class Panel extends JPanel {
         g2d.drawString(start_msg, (float) (-g2d.getFontMetrics(start_font).getStringBounds(start_msg, g2d).getWidth() / 2.0 + Main.width / 2.0), (float) (100 + 4 * g2d.getFontMetrics(start_font).getStringBounds(start_msg, g2d).getHeight()));
     }
 
+    /**
+     * The paint method for Screen WIN
+     * @param g Graphics
+     */
     private void displayWin(Graphics g) {
         Graphics2D g2d = (Graphics2D) g.create();
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -224,6 +270,10 @@ public class Panel extends JPanel {
         g2d.drawString(replay_msg, (float) (-g2d.getFontMetrics(replay_font).getStringBounds(replay_msg, g2d).getWidth() / 2.0 + Main.width / 2.0), (float) (100 + 2 * g2d.getFontMetrics(replay_font).getStringBounds(replay_msg, g2d).getHeight()));
     }
 
+    /**
+     * The paint method for Screen GAMEOVER
+     * @param g Graphics
+     */
     private void displayGameOver(Graphics g) {
         Graphics2D g2d = (Graphics2D) g.create();
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -242,8 +292,7 @@ public class Panel extends JPanel {
     }
 
     /**
-     * When in-game, this is called and updates the game (all entities, turn...)
-     *
+     * The paint method for the Game screen. The game part of the program.
      * @param g Graphics
      */
     private void updateGame(Graphics g) {
@@ -287,6 +336,10 @@ public class Panel extends JPanel {
         }
     }
 
+    /**
+     * Draws all entities
+     * @param g Graphics
+     */
     private void drawAllEntities(Graphics g) {
         for (ArrayList<Cell> a : cells) {
             for (Cell c : a) {
@@ -295,6 +348,9 @@ public class Panel extends JPanel {
         }
     }
 
+    /**
+     * @return Returns the x coords of all mhos currently in existence on the board in an array
+     */
     private int[] getMhoXs() {
         int[] mhoxs = new int[total_mhos];
         int i = 0;
@@ -309,6 +365,10 @@ public class Panel extends JPanel {
         return mhoxs;
     }
 
+    /**
+     *
+     * @return Returns the y coords of all mhos currently in existence on the board in an array
+     */
     private int[] getMhoYs() {
         int[] mhoys = new int[total_mhos];
         int i = 0;
@@ -323,6 +383,9 @@ public class Panel extends JPanel {
         return mhoys;
     }
 
+    /**
+     * @return Returns the number of mhos currently on the board
+     */
     private int countMhos() {
         int temp = 0;
         for (ArrayList<Cell> a : cells) {
@@ -354,10 +417,6 @@ public class Panel extends JPanel {
      */
     public boolean isOccupied(int x, int y) {
         return (isFence(x, y) || isPlayer(x, y) || isMho(x, y));
-    }
-
-    public boolean isEmpty(int x, int y) {
-        return (cells.get(x).get(y).getEntity()) instanceof Entity;
     }
 
     /**
@@ -435,8 +494,15 @@ public class Panel extends JPanel {
         return y;
     }
 
+    /**
+     * The KeyBinding Action for Restart
+     */
     private class Restart extends AbstractAction {
 
+        /**
+         * Restarts the game. Performs all actions necessary to do so
+         * @param e ActionEvent
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             if (screen == Screen.GAMEOVER || screen == Screen.GAME || screen == Screen.WIN) {
@@ -452,8 +518,15 @@ public class Panel extends JPanel {
         }
     }
 
+    /**
+     * The KeyBinding Action for Enter (begin playing the game)
+     */
     private class Enter extends AbstractAction {
 
+        /**
+         * Begins playing the game
+         * @param e ActionEvent
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             if (screen == Screen.MAIN) {

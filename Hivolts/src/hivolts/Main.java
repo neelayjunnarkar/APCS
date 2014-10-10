@@ -14,25 +14,13 @@ import java.time.Instant;
 public class Main {
 
     public static final int
-            width = 640, /**
-     * The width of the window
-     */
-    height = 640, /**
-     * The height of the window
-     */
-    board_dim_x = 12, /**
-     * The width of the board in cell units
-     */
-    board_dim_y = 12, /**
-     * The height of the board in cell units
-     */
-    cell_width = width / board_dim_x, /**
-     * The width of each individual cell of the board
-     */
-    cell_height = height / board_dim_y, /**
-     * The height of each individual cell of the board
-     */
-    cell_sep = 1; /**The number of pixels by which each cell is separated*/
+            width = 640,
+            height = 640,
+            board_dim_x = 12, /* The width of the board in cell units */
+            board_dim_y = 12, /* The height of the board in cell units */
+            cell_width = width / board_dim_x, /* The width of each individual cell of the board */
+            cell_height = height / board_dim_y, /*The height of each individual cell of the board*/
+            cell_sep = 1; /*The number of pixels by which each cell is separated*/
 
     /**
      * The JFrame
@@ -58,6 +46,7 @@ public class Main {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
+        /*Repaints the panel and also forces the computer to not exceed a certain rate of repainting*/
         while (frame.isEnabled()) {
             Instant t0 = Instant.now();
             panel.repaint();

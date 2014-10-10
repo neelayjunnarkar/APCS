@@ -124,9 +124,7 @@ public class Player extends LivingEntity {
      */
     @Override
     public void update(int x, int y) {
-//		if (panel.isMurderer(x, y)) {
-//			dead = true;
-//		}
+
     }
 
     /**
