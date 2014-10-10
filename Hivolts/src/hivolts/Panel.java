@@ -29,7 +29,7 @@ public class Panel extends JPanel {
      * An enum which says which says which state the program is in--Main Menu, Game, or GameOver
      */
     private enum Screen {
-        WIN, GAME, GAMEOVER
+        MAIN, WIN, GAME, GAMEOVER
     }
 
     /**
@@ -65,10 +65,28 @@ public class Panel extends JPanel {
      */
     int updated_mhos = 0;
 
-    Color backgroundColor = new Color(232, 139, 55, 15);
+    Color backgroundColor = new Color(255, 255, 255, 255);
     Color win_backgroundColor = new Color(236, 236, 236, 105);
     Color gameover_backgroundColor = new Color(19, 19, 19, 60);
     Color gameover_fontColor = new Color(0, 0, 0, 255);
+    Color win_fontColor = new Color(0, 0, 0, 255);
+    Color main_color = new Color(0, 0, 0, 255);
+
+    String win_msg = "You Win :) :) :) :) :) :)";
+    String replay_msg = "Hit 'R' to Replay";
+    String gameover_msg = "Game Over :( :( :( :( :( :(";
+    String restart_msg = "Hit 'R' to Restart";
+    String main_msg = "HIVOLTS";
+    String author_msg = "by Neelay Junnarkar";
+    String start_msg = "Hit \"Enter\" to begin playing!";
+
+    Font gameover_font = new Font("Consolas", Font.BOLD, 30);
+    Font restart_font = new Font("Consolas", Font.PLAIN, 18);
+    Font win_font = new Font("Consolas", Font.BOLD, 30);
+    Font main_font = new Font("Consolas", Font.BOLD, 50);
+    Font author_font = new Font("Consolas", Font.PLAIN, 20);
+    Font start_font = new Font("Consolas", Font.PLAIN, 22);
+    Font replay_font = new Font("Consolas", Font.PLAIN, 18);
 
     /**
      * The constructor for Panel
@@ -76,10 +94,12 @@ public class Panel extends JPanel {
      */
     public Panel() {
         setPreferredSize(new Dimension(Main.width, Main.height));
-        screen = Screen.GAME;
+        screen = Screen.MAIN;
 
         getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_R, 0), "R");
         getActionMap().put("R", new Restart());
+        getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "Enter");
+        getActionMap().put("Enter", new Enter());
 
         for (int x = 0; x < 12; x++) {
             cells.add(new ArrayList<Cell>(12));
@@ -152,8 +172,11 @@ public class Panel extends JPanel {
         Graphics2D g2d = (Graphics2D) g.create();
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         switch (screen) {
+            case MAIN:
+                displayMain(g);
+                break;
             case WIN:
-            	displayWin(g);
+                displayWin(g);
                 break;
             case GAME:
                 updateGame(g);
@@ -164,46 +187,58 @@ public class Panel extends JPanel {
         }
     }
 
-    private void displayWin(Graphics g) {
-    	Graphics2D g2d = (Graphics2D) g.create();
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        for (ArrayList<Cell> a : cells) {
-        	for (Cell c : a) {
-        		c.draw(g2d);
-        	}
-        }
-        g2d.setColor(win_backgroundColor);
-        g2d.fillRect(0, 0, Main.width, Main.height);
-        g2d.setColor(gameover_fontColor);
-        String gameover_msg = "You Win :) :) :) :) :) :)";
-        String restart_msg = "Hit 'R' to Restart";
-        Font gameover_font = new Font("Consolas", Font.BOLD, 20);
-        Font restart_font = new Font("Consolas", Font.PLAIN, 12);
-        g2d.setFont(gameover_font);
-        g2d.drawString(gameover_msg, (float)(-g2d.getFontMetrics(gameover_font).getStringBounds(gameover_msg, g2d).getWidth()/2.0+Main.width/2.0), (float) 100.0);
-        g2d.setFont(restart_font);
-        g2d.drawString(restart_msg, (float)(-g2d.getFontMetrics(restart_font).getStringBounds(restart_msg, g2d).getWidth()/2.0+Main.width/2.0), (float)(100+2*g2d.getFontMetrics(restart_font).getStringBounds(restart_msg, g2d).getHeight()));
-	}
+    private void displayMain(Graphics g) {
 
-	private void displayGameOver(Graphics g) {
         Graphics2D g2d = (Graphics2D) g.create();
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         for (ArrayList<Cell> a : cells) {
-        	for (Cell c : a) {
-        		c.draw(g2d);
-        	}
+            for (Cell c : a) {
+                if (c.getEntity() instanceof Fence) { c.draw(g2d); }
+            }
+        }
+
+        System.out.println("helllo");
+        g2d.setColor(main_color);
+        g2d.setFont(main_font);
+        g2d.drawString(main_msg, (float) (-g2d.getFontMetrics(main_font).getStringBounds(main_msg, g2d).getWidth() / 2.0 + Main.width / 2.0), (float) 100.0);
+        g2d.setFont(author_font);
+        g2d.drawString(author_msg, (float) (Main.width/2.0), (float) (100 + 2 * g2d.getFontMetrics(author_font).getStringBounds(author_msg, g2d).getHeight()));
+        g2d.setFont(start_font);
+        g2d.drawString(start_msg, (float) (-g2d.getFontMetrics(start_font).getStringBounds(start_msg, g2d).getWidth() / 2.0 + Main.width / 2.0), (float) (100 + 4 * g2d.getFontMetrics(start_font).getStringBounds(start_msg, g2d).getHeight()));
+    }
+
+    private void displayWin(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g.create();
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        for (ArrayList<Cell> a : cells) {
+            for (Cell c : a) {
+                c.draw(g2d);
+            }
+        }
+        g2d.setColor(win_backgroundColor);
+        g2d.fillRect(0, 0, Main.width, Main.height);
+        g2d.setColor(win_fontColor);
+        g2d.setFont(win_font);
+        g2d.drawString(win_msg, (float) (-g2d.getFontMetrics(win_font).getStringBounds(win_msg, g2d).getWidth() / 2.0 + Main.width / 2.0), (float) 100.0);
+        g2d.setFont(replay_font);
+        g2d.drawString(replay_msg, (float) (-g2d.getFontMetrics(replay_font).getStringBounds(replay_msg, g2d).getWidth() / 2.0 + Main.width / 2.0), (float) (100 + 2 * g2d.getFontMetrics(replay_font).getStringBounds(replay_msg, g2d).getHeight()));
+    }
+
+    private void displayGameOver(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g.create();
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        for (ArrayList<Cell> a : cells) {
+            for (Cell c : a) {
+                c.draw(g2d);
+            }
         }
         g2d.setColor(gameover_backgroundColor);
         g2d.fillRect(0, 0, Main.width, Main.height);
         g2d.setColor(gameover_fontColor);
-        String gameover_msg = "Game Over :( :( :( :( :( :(";
-        String restart_msg = "Hit 'R' to Restart";
-        Font gameover_font = new Font("Consolas", Font.BOLD, 20);
-        Font restart_font = new Font("Consolas", Font.PLAIN, 12);
         g2d.setFont(gameover_font);
-        g2d.drawString(gameover_msg, (float)(-g2d.getFontMetrics(gameover_font).getStringBounds(gameover_msg, g2d).getWidth()/2.0+Main.width/2.0), (float) 100.0);
+        g2d.drawString(gameover_msg, (float) (-g2d.getFontMetrics(gameover_font).getStringBounds(gameover_msg, g2d).getWidth() / 2.0 + Main.width / 2.0), (float) 100.0);
         g2d.setFont(restart_font);
-        g2d.drawString(restart_msg, (float)(-g2d.getFontMetrics(restart_font).getStringBounds(restart_msg, g2d).getWidth()/2.0+Main.width/2.0), (float)(100+2*g2d.getFontMetrics(restart_font).getStringBounds(restart_msg, g2d).getHeight()));
+        g2d.drawString(restart_msg, (float) (-g2d.getFontMetrics(restart_font).getStringBounds(restart_msg, g2d).getWidth() / 2.0 + Main.width / 2.0), (float) (100 + 2 * g2d.getFontMetrics(restart_font).getStringBounds(restart_msg, g2d).getHeight()));
     }
 
     /**
@@ -212,28 +247,44 @@ public class Panel extends JPanel {
      * @param g Graphics
      */
     private void updateGame(Graphics g) {
-      	if (turn == Turn.PLAYER) {
+        total_mhos = countMhos();
+
+        if (player.isDead()) {
+            screen = Screen.GAMEOVER;
+            return;
+        }
+        if (total_mhos == 0) {
+            screen = Screen.WIN;
+            paintComponent(g);
+            return;
+        }
+        if (turn == Turn.PLAYER) {
             int playerx = getPlayerX();
             int playery = getPlayerY();
             cells.get(playerx).get(playery).update();
-            if (((Player)cells.get(playerx).get(playery).getEntity()).getAction()) {
+            if (((Player) cells.get(playerx).get(playery).getEntity()).getAction()) {
                 turn = Turn.ENEMY;
-                ((Player)cells.get(playerx).get(playery).getEntity()).setAction(false);
+                ((Player) cells.get(playerx).get(playery).getEntity()).setAction(false);
             }
         } else if (turn == Turn.ENEMY) {
-            total_mhos = countMhos();
             int[] mhoxs = getMhoXs();
             int[] mhoys = getMhoYs();
-            System.out.println(total_mhos+" "+mhoxs.length+" "+mhoys.length);
+            //System.out.println(total_mhos+" "+mhoxs.length+" "+mhoys.length);
 
             for (int i = 0; i < total_mhos; i++) {
-                System.out.println("i: "+i+" total_mhos: "+total_mhos);
+                //  System.out.println("i: "+i+" total_mhos: "+total_mhos);
                 cells.get(mhoxs[i]).get(mhoys[i]).update();
             }
             turn = Turn.PLAYER;
         }
 
         drawAllEntities(g);
+
+        if (total_mhos == 0) {
+            screen = Screen.WIN;
+            paintComponent(g);
+            return;
+        }
     }
 
     private void drawAllEntities(Graphics g) {
@@ -257,6 +308,7 @@ public class Panel extends JPanel {
         }
         return mhoxs;
     }
+
     private int[] getMhoYs() {
         int[] mhoys = new int[total_mhos];
         int i = 0;
@@ -272,17 +324,17 @@ public class Panel extends JPanel {
     }
 
     private int countMhos() {
-		int temp = 0;
-		for (ArrayList<Cell> a : cells) {
-			for (Cell c : a) {
-				if (c.getEntity() instanceof Mho) temp++;
-			}
-		}
-		//System.out.println("n mhos: "+temp);
-		return temp;
-	}
+        int temp = 0;
+        for (ArrayList<Cell> a : cells) {
+            for (Cell c : a) {
+                if (c.getEntity() instanceof Mho) temp++;
+            }
+        }
+        //System.out.println("n mhos: "+temp);
+        return temp;
+    }
 
-	/**
+    /**
      * Returns whether location on board is an entity which kills the player
      *
      * @param x x-coord
@@ -305,8 +357,9 @@ public class Panel extends JPanel {
     }
 
     public boolean isEmpty(int x, int y) {
-    	return (cells.get(x).get(y).getEntity()) instanceof Entity;
+        return (cells.get(x).get(y).getEntity()) instanceof Entity;
     }
+
     /**
      * Returns whether location on board is a fence
      *
@@ -386,15 +439,26 @@ public class Panel extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("restart");
-            cleanBoard(cells);
-            spawnEntities();
-            ((Player)cells.get(getPlayerX()).get(getPlayerY()).getEntity()).setAction(false);
-            ((Player)cells.get(getPlayerX()).get(getPlayerY()).getEntity()).setDead(false);
-            updated_mhos = 0;
-            total_mhos = 12;
-            screen = screen.GAME;
-            update(getGraphics());
+            if (screen == Screen.GAMEOVER || screen == Screen.GAME || screen == Screen.WIN) {
+                System.out.println("restart");
+                cleanBoard(cells);
+                spawnEntities();
+                ((Player) cells.get(getPlayerX()).get(getPlayerY()).getEntity()).setAction(false);
+                ((Player) cells.get(getPlayerX()).get(getPlayerY()).getEntity()).setDead(false);
+                updated_mhos = 0;
+                total_mhos = 12;
+                screen = screen.GAME;
+            }
+        }
+    }
+
+    private class Enter extends AbstractAction {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (screen == Screen.MAIN) {
+                screen = screen.GAME;
+            }
         }
     }
 

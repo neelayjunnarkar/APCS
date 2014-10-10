@@ -30,9 +30,15 @@ public class Entity extends JComponent {
     }
 
     private boolean updated = false;
-    public boolean getUpdated() { return updated; }
-    public void setUpdated(boolean bool) { updated = bool; }
-    
+
+    public boolean getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(boolean bool) {
+        updated = bool;
+    }
+
     /**
      * The constructor for Entity
      */

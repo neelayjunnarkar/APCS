@@ -5,6 +5,7 @@ import java.time.Duration;
 import java.time.Instant;
 //import java.time.Duration;
 //import java.time.Instant;
+
 /**
  * @author Neelay Junnarkar
  *         The Main class is the entry point of the program and uses a JFrame
@@ -44,6 +45,7 @@ public class Main {
     Panel panel = new Panel();
 
     final long update_time_ms = 100;
+
     /**
      * The constructor for the Main class. Loops repaint, and sets up window.
      */
@@ -57,12 +59,12 @@ public class Main {
         frame.setVisible(true);
 
         while (frame.isEnabled()) {
-               Instant t0 = Instant.now();
+            Instant t0 = Instant.now();
             panel.repaint();
             Instant tf = Instant.now();
             try {
-             Thread.sleep((Duration.between(t0, tf).toMillis() > update_time_ms) ? (Duration.between(t0, tf).toMillis() - update_time_ms) : 0);
-        } catch (Exception e) {
+                Thread.sleep((Duration.between(t0, tf).toMillis() > update_time_ms) ? (Duration.between(t0, tf).toMillis() - update_time_ms) : 0);
+            } catch (Exception e) {
                 //e.printStackTrace();
             }
         }
