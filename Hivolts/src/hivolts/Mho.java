@@ -40,10 +40,8 @@ public class Mho extends LivingEntity {
         entityx = x;
         entityy = y;
         int prevx = x, prevy = y;
-        System.out.println("updated mho");
         if (x == panel.getPlayerX() && y != panel.getPlayerY()) {
             entityy = (y < panel.getPlayerY()) ? y+1 : y-1;
-            System.out.println("this: " + x + ", " + y + "  player: " + panel.getPlayerX() + ", " + panel.getPlayerY());
         } else if (y == panel.getPlayerY() && x != panel.getPlayerX()) {
             entityx = (x < panel.getPlayerX()) ? x+1 : x-1;
         } else if (Math.abs(x-panel.getPlayerX()) == Math.abs(y-panel.getPlayerY())) {

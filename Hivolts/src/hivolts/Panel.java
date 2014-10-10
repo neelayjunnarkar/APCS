@@ -212,7 +212,63 @@ public class Panel extends JPanel {
      * @param g Graphics
      */
     private void updateGame(Graphics g) {
-      	
+      	if (turn == Turn.PLAYER) {
+            int playerx = getPlayerX();
+            int playery = getPlayerY();
+            cells.get(playerx).get(playery).update();
+            if (((Player)cells.get(playerx).get(playery).getEntity()).getAction()) {
+                turn = Turn.ENEMY;
+                ((Player)cells.get(playerx).get(playery).getEntity()).setAction(false);
+            }
+        } else if (turn == Turn.ENEMY) {
+            total_mhos = countMhos();
+            int[] mhoxs = getMhoXs();
+            int[] mhoys = getMhoYs();
+            System.out.println(total_mhos+" "+mhoxs.length+" "+mhoys.length);
+
+            for (int i = 0; i < total_mhos; i++) {
+                System.out.println("i: "+i+" total_mhos: "+total_mhos);
+                cells.get(mhoxs[i]).get(mhoys[i]).update();
+            }
+            turn = Turn.PLAYER;
+        }
+
+        drawAllEntities(g);
+    }
+
+    private void drawAllEntities(Graphics g) {
+        for (ArrayList<Cell> a : cells) {
+            for (Cell c : a) {
+                c.draw(g);
+            }
+        }
+    }
+
+    private int[] getMhoXs() {
+        int[] mhoxs = new int[total_mhos];
+        int i = 0;
+        for (int x = 0; x < Main.board_dim_x; x++) {
+            for (int y = 0; y < Main.board_dim_y; y++) {
+                if (cells.get(x).get(y).getEntity() instanceof Mho) {
+                    mhoxs[i] = x;
+                    i++;
+                }
+            }
+        }
+        return mhoxs;
+    }
+    private int[] getMhoYs() {
+        int[] mhoys = new int[total_mhos];
+        int i = 0;
+        for (int x = 0; x < Main.board_dim_x; x++) {
+            for (int y = 0; y < Main.board_dim_y; y++) {
+                if (cells.get(x).get(y).getEntity() instanceof Mho) {
+                    mhoys[i] = y;
+                    i++;
+                }
+            }
+        }
+        return mhoys;
     }
 
     private int countMhos() {
@@ -222,7 +278,7 @@ public class Panel extends JPanel {
 				if (c.getEntity() instanceof Mho) temp++;
 			}
 		}
-		System.out.println("n mhos: "+temp);
+		//System.out.println("n mhos: "+temp);
 		return temp;
 	}
 
@@ -333,6 +389,7 @@ public class Panel extends JPanel {
             System.out.println("restart");
             cleanBoard(cells);
             spawnEntities();
+            ((Player)cells.get(getPlayerX()).get(getPlayerY()).getEntity()).setAction(false);
             ((Player)cells.get(getPlayerX()).get(getPlayerY()).getEntity()).setDead(false);
             updated_mhos = 0;
             total_mhos = 12;

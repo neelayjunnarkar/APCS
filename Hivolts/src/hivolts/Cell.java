@@ -63,11 +63,12 @@ public class Cell extends JComponent {
         entity.update(x, y);
         /*To Enable Snake: remove if statement and 'entity = new Entity(x, y);' (and follow all other To Enable Snake statements)*/
         if (entity.getEntityX() != x || entity.getEntityY() != y) {
-        	if (panel.getCells().get(entity.getEntityX()).get(entity.getEntityY()).getEntity() instanceof Fence) {
+            if (panel.getCells().get(entity.getEntityX()).get(entity.getEntityY()).getEntity() instanceof Fence) {
         		entity = new Entity(x, y);
         		return;
         	}
             panel.getCells().get(entity.getEntityX()).get(entity.getEntityY()).setEntity(entity);
+            System.out.println(entity.getEntityX() + " " + entity.getEntityY());
             entity = new Entity(x, y);
         }
     }

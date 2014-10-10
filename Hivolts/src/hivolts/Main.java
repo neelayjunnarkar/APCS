@@ -1,6 +1,8 @@
 package hivolts;
 
 import javax.swing.JFrame;
+import java.time.Duration;
+import java.time.Instant;
 //import java.time.Duration;
 //import java.time.Instant;
 /**
@@ -55,14 +57,14 @@ public class Main {
         frame.setVisible(true);
 
         while (frame.isEnabled()) {
-         //   Instant t0 = Instant.now();
+               Instant t0 = Instant.now();
             panel.repaint();
-            //Instant tf = Instant.now();
-            //try {
-               // Thread.sleep((Duration.between(t0, tf).toMillis() > update_time_ms) ? (Duration.between(t0, tf).toMillis() - update_time_ms) : 0);
-            //} catch (Exception e) {
+            Instant tf = Instant.now();
+            try {
+             Thread.sleep((Duration.between(t0, tf).toMillis() > update_time_ms) ? (Duration.between(t0, tf).toMillis() - update_time_ms) : 0);
+        } catch (Exception e) {
                 //e.printStackTrace();
-           // }
+            }
         }
     }
 
