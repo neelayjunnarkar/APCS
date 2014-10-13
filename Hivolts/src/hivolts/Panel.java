@@ -14,7 +14,7 @@ import javax.swing.*;
  */
 public class Panel extends JPanel {
 
-    private ArrayList<ArrayList<Cell>> cells = new ArrayList<>(12);
+    private ArrayList<ArrayList<Cell>> cells = new ArrayList<ArrayList<Cell>>(12);
 
     public ArrayList<ArrayList<Cell>> getCells() {
         return cells;

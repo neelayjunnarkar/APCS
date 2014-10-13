@@ -1,8 +1,6 @@
 package hivolts;
 
 import javax.swing.JFrame;
-import java.time.Duration;
-import java.time.Instant;
 //import java.time.Duration;
 //import java.time.Instant;
 
@@ -48,14 +46,14 @@ public class Main {
 
         /*Repaints the panel and also forces the computer to not exceed a certain rate of repainting*/
         while (frame.isEnabled()) {
-            Instant t0 = Instant.now();
+//            Instant t0 = Instant.now();
             panel.repaint();
-            Instant tf = Instant.now();
-            try {
-                Thread.sleep((Duration.between(t0, tf).toMillis() > update_time_ms) ? (Duration.between(t0, tf).toMillis() - update_time_ms) : 0);
-            } catch (Exception e) {
-                //e.printStackTrace();
-            }
+//            Instant tf = Instant.now();
+//            try {
+//                Thread.sleep((Duration.between(t0, tf).toMillis() > update_time_ms) ? (Duration.between(t0, tf).toMillis() - update_time_ms) : 0);
+//            } catch (Exception e) {
+//                //e.printStackTrace();
+//            }
         }
     }
 
