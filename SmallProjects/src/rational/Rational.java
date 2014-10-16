@@ -40,7 +40,6 @@ class Rational {
         int gcd = gcd(numerator, denominator);
         numerator /= gcd;
         denominator /= gcd;
-
     }
 
     public void print() {
