@@ -36,6 +36,10 @@ public class Deck {
 		}
 	}
 
+	public Card at(int index) {
+			return cards[index];
+	}
+	
 	/*
 	 * Returns index of the first location where card appears in deck. Or -1 if
 	 * it does not appear. Uses a linear search.
@@ -200,12 +204,11 @@ public class Deck {
 	}
 	
 	public PokerHand deal() {
-		Deck deck = new Deck();
-		Card[] cards = new Card[5];
+		Card[] hand = new Card[5];
 		
-		Random rand = new Random();
 		for (int i = 0; i < 5; i++) {
-			
+			hand[i] = new Card(cards[i]);
 		}
+		return new PokerHand(hand);
 	}
 }
