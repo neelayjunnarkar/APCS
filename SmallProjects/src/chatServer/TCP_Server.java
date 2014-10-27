@@ -11,12 +11,15 @@ public class TCP_Server {
 	Socket sock;
 	
 	BufferedReader usr_in = new BufferedReader( new InputStreamReader(System.in));
-	DataOutputStream client_out = new DataOutputStream(sock.getOutputStream());
-	BufferedReader client_in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+	DataOutputStream client_out;
+	BufferedReader client_in;
 	
 	public TCP_Server() throws IOException {
+		
 		serv_sock = new ServerSocket(3950);
 		sock = serv_sock.accept();
+		client_out = new DataOutputStream(sock.getOutputStream());
+		client_in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
 		
 		while (true) {
 			msg = usr_in.readLine();

@@ -11,12 +11,13 @@ public class TCP_Client {
 	Socket socket;
 	InetAddress addr = InetAddress.getByName("123.123.321.321");
 	BufferedReader usr_in = new BufferedReader( new InputStreamReader(System.in));
-	DataOutputStream serv_out = new DataOutputStream(socket.getOutputStream());
-	BufferedReader serv_in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+	DataOutputStream serv_out;
+	BufferedReader serv_in;
 	
 	public TCP_Client() throws UnknownHostException, IOException {
 		socket = new Socket(addr, 3950);
-		
+		serv_out = new DataOutputStream(socket.getOutputStream());
+		serv_in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		while (true) {
 			msg = usr_in.readLine();
 			serv_out.writeBytes(msg+'\n');
