@@ -9,7 +9,7 @@ public class TCP_Client {
 	String buf;
 	
 	Socket socket;
-	InetAddress addr = InetAddress.getByName("123.123.321.321");
+	InetAddress addr = InetAddress.getByName("10.32.70.18");
 	BufferedReader usr_in = new BufferedReader( new InputStreamReader(System.in));
 	DataOutputStream serv_out;
 	BufferedReader serv_in;
