@@ -5,39 +5,29 @@ import java.net.*;
 
 public class TCP_Server {
 
-	String msg, buf;
-	
-	ServerSocket serv_sock;
-	Socket sock;
-	
-	BufferedReader usr_in = new BufferedReader( new InputStreamReader(System.in));
-	DataOutputStream client_out;
-	BufferedReader client_in;
-	
+
 	public TCP_Server() throws IOException {
-		
-		serv_sock = new ServerSocket(3950);
-		sock = serv_sock.accept();
-		client_out = new DataOutputStream(sock.getOutputStream());
-		client_in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-		
-		while (true) {
-			msg = usr_in.readLine();
-			client_out.writeBytes(msg+'\n');
-			if ((buf = client_in.readLine()) == null) {
-				System.out.println("connection terminated");
-				break;
-			}
-			System.out.println("client: "+buf);
-		}
-		sock.close();
-		serv_sock.close();
+	        ServerSocket serv_socket = new ServerSocket(9090);
+	        try {
+	            while (true) {
+	                Socket socket = serv_socket.accept();
+	                try {
+	                    PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+	                    out.println("hello");
+	                } finally {
+	                    socket.close();
+	                }
+	            }
+	        }
+	        finally {
+	            serv_socket.close();
+	        }
 		
 	}
 	
 	public static void main(String[] args) {
 		try {
-			new TCP_Server();
+			TCP_Server server = new TCP_Server();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
