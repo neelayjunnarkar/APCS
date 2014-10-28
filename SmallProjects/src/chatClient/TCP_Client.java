@@ -11,11 +11,11 @@ public class TCP_Client {
 	Socket socket;
 
 	public TCP_Client() throws UnknownHostException, IOException {
-		String serverAddress = JOptionPane.showInputDialog("Enter IP Address:");
-		socket = new Socket(serverAddress, 9090);
+		String serverAddress = "199.80.145.98";
+		socket = new Socket(serverAddress, 9990);
 		BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		buf = input.readLine();
-		JOptionPane.showMessageDialog(null, buf);
+		System.out.println(buf);
 		System.exit(0);
 	}
 
