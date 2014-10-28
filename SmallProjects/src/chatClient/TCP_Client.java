@@ -12,7 +12,7 @@ public class TCP_Client {
 
 	public TCP_Client() throws UnknownHostException, IOException {
 		String serverAddress = "199.80.145.98";
-		socket = new Socket(serverAddress, 9990);
+		socket = new Socket(serverAddress, 9099);
 		BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		buf = input.readLine();
 		System.out.println(buf);

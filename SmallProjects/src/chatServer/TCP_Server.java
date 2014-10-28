@@ -7,19 +7,16 @@ public class TCP_Server {
 
 
 	public TCP_Server() throws IOException {
-	        ServerSocket serv_socket = new ServerSocket(9090);
+	        ServerSocket serv_socket = new ServerSocket(9099);
+	        Socket socket = null;
 	        try {
+                socket = serv_socket.accept();
 	            while (true) {
-	                Socket socket = serv_socket.accept();
-	                try {
 	                    PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 	                    out.println("hello");
-	                } finally {
-	                    socket.close();
-	                }
 	            }
-	        }
-	        finally {
+	        } finally {
+	        	socket.close();
 	            serv_socket.close();
 	        }
 		
