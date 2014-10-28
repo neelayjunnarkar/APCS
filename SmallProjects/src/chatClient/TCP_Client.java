@@ -11,9 +11,14 @@ public class TCP_Client {
 	Socket socket;
 
 	public TCP_Client() throws UnknownHostException, IOException {
-		String serverAddress = "199.80.145.98";
-		socket = new Socket(serverAddress, 9099);
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in)); 
+		msg = in.readLine();
+		PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+		String serverAddress = "199.80.144.121";
+
+		socket = new Socket(serverAddress, 9097);
 		BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+		out.write(msg);
 		buf = input.readLine();
 		System.out.println(buf);
 		System.exit(0);
