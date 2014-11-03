@@ -58,9 +58,10 @@ public class Main {
         ArrayList<BigInteger> arr = new ArrayList<>(); //ArrayList<Integer> used as to have a dynamic-length array.
         for (int i = 0; i <= n; i++) {
             if (i < 3) {
-                arr.add(i, new BigInteger(new Integer(i).toString()));
+                arr.add(i, new BigInteger(new Integer(i).toString())); //arr[i] = i
                 continue;
             } else {
+            	// esentially does arr[i] = arr[i-1] + 2*arr[i-2] + 3*arr[i-3]
                 arr.add(i, new BigInteger(arr.get(i - 1).toString()).add(new BigInteger(arr.get(i - 2).toString()).multiply(new BigInteger("2")).add(new BigInteger(arr.get(i - 3).toString()).multiply(new BigInteger("3")) )));
             }
         }
@@ -70,7 +71,7 @@ public class Main {
     public static void main(String[] args) {
         long t0 = System.currentTimeMillis(); //used to compare speeds of the different methods of calculating f(n)
         int n = 10;
-       BigInteger fni = fn_iterative(n);
+        BigInteger fni = fn_iterative(n);
         System.out.println("f("+n+") = "+fni);
 
         long tf = System.currentTimeMillis(); //used to compare speeds of the different methods of calculating f(n)
