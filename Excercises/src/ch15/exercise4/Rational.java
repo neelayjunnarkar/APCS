@@ -1,5 +1,7 @@
 package ch15.exercise4;
 
+//code for exercise 4
+
 /*
  * Whether I prefer class or object methods for these methods depends on the usage of the method. In most cases, for these methods, I prefer useing the class methods.
  * 
@@ -19,42 +21,64 @@ class Rational {
         denominator = den;
         reduce();
     }
-    
-    //object method negate
+
+    /**
+     * object method
+     * negates fraction
+     */
     public void negate() {
         numerator = -(numerator);
     }
-    
-    //class method negate
+
+    /**
+     * class method
+     * @param r switches sign of rational, negates it
+     */
     public static void negate(Rational r) {
     	r.numerator = -(r.numerator);
     }
 
-    //object method invert
+    /**
+     * object method
+     * inverts the fraction. switches numerator with denominator
+     */
     public void invert() {
         numerator += denominator;
         denominator = numerator - denominator;
         numerator = numerator - denominator;
     }
-    
-    //class method invert
+
+    /**
+     * class method
+     * @param r inverts rational, switches numberator with denominator
+     */
     public static void invert(Rational r) {
     	r.numerator += r.denominator;
         r.denominator = r.numerator - r.denominator;
         r.numerator = r.numerator - r.denominator;
     }
 
-    //object method toDouble
+    /**
+     *object method
+     * @return returns decimal version of fraction
+     */
     public double toDouble() {
         return (double)numerator/(double)denominator;
     }
-    
-    //class method toDouble
+
+    /**
+     * class method
+     * @param r the rational to be converted to decimal
+     * @return returns decimal version of fraction
+     */
     public static double toDouble(Rational r) {
     	return (double)r.numerator/(double)r.denominator;
     }
 
-    //object method greatest common factor
+    /**
+     * object method
+      * @return returns greatest common denominator of numerator and denominator;
+     */
     public int  gcd() {
         int gcd = 1;
         int temp = 0;
@@ -68,7 +92,12 @@ class Rational {
         return gcd;
     }
 
-    //class method gcf
+    /**
+     * class method
+     * @param a
+     * @param b
+     * @return returns greatest common denominator of a and b
+     */
     public static int  gcd(int a, int b) {
         int gcd = 1;
         int temp = 0;
@@ -80,38 +109,56 @@ class Rational {
         gcd = a;
         return gcd;
     }
-    
-    //object method reduce()
+
+    /**
+     * object
+     * reduces fraction
+     */
     public void reduce() {
         int gcd = gcd();
         numerator /= gcd;
         denominator /= gcd;
     }
-    
-    //class method reduce
+
+    /**
+     * class method
+     * @param r reduces rational r
+     */
     public static void reduce(Rational r) {
         int gcd = gcd(r.numerator, r.denominator);
         r.numerator /= gcd;
         r.denominator /= gcd;
     }
 
-    //object method add
+    /**
+     * object
+     * @param r adds fraction to fraction r
+     * @return returns new rational
+     */
     public Rational add(Rational r) {
     	if (denominator == r.denominator) 
     		return new Rational(numerator+r.numerator, denominator);
     	
     	return new Rational(numerator*r.denominator+r.numerator*denominator, denominator*r.denominator);
     }
-    
-    //class method add
+
+    /**
+     * class method
+     * @param r1
+     * @param r2
+     * @return returns r1+r2
+     */
     public static Rational add(Rational r1, Rational r2) {
     	if (r1.denominator == r2.denominator) 
     		return new Rational(r1.numerator+r2.numerator, r1.denominator);
     	
     	return new Rational(r1.numerator*r2.denominator+r2.numerator*r1.denominator, r2.denominator*r1.denominator);
     }
-    
-    //object method print
+
+    /**
+     * object
+     * prints rational
+     */
     public void printRational() {
     	if (denominator == 1) {
     		System.out.println(numerator);

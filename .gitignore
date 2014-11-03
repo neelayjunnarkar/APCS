@@ -218,6 +218,7 @@ pip-log.txt
 .classpath
 .project
 .settings/
+*.class
 
 # Intellij
 .idea/

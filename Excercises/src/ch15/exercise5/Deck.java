@@ -12,6 +12,24 @@ public class Deck {
 		this.cards = new Card[n];
 	}
 
+    public Deck(Deck deck) {
+        cards = deck.cards;
+    }
+
+    /**
+     * @author Neelay Junnarkar
+     * @param ncards number of cards to be dealt for the pokerhand
+     * @return
+     */
+    public PokerHand deal(int ncards) {
+        Card[] hand = new Card[ncards];
+
+        for (int i = 0; i < ncards; i++) {
+            hand[i] = new Card(cards[i]);
+        }
+        return new PokerHand(hand, ncards);
+    }
+
 	/*
 	 * Makes an array of 52 cards.
 	 */
@@ -112,11 +130,12 @@ public class Deck {
 	/*
 	 * Sorts a deck from low to high.
 	 */
-	public void sort() {
+	public Deck sort() {
 		for (int i = 0; i < cards.length; i++) {
 			int j = indexLowestCard(i, cards.length - 1);
 			swapCards(i, j);
 		}
+        return this;
 	}
 
 	/*
@@ -202,13 +221,6 @@ public class Deck {
 		// (d1 and d2 get garbage collected)
 		return merge(d1, d2);
 	}
-	
-	public PokerHand deal() {
-		Card[] hand = new Card[5];
-		
-		for (int i = 0; i < 5; i++) {
-			hand[i] = new Card(cards[i]);
-		}
-		return new PokerHand(hand);
-	}
+
+
 }

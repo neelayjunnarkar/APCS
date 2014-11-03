@@ -1,5 +1,7 @@
 package ch15.exercise3;
 
+//Code for Exercise 3
+
 public class Complex {
 
 	int real, imag;
