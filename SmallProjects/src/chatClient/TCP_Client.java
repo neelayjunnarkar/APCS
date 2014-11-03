@@ -15,7 +15,7 @@ public class TCP_Client {
 		msg = in.readLine();
 		PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 		String serverAddress = "199.80.144.121";
-
+ 
 		socket = new Socket(serverAddress, 9097);
 		BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		out.write(msg);
