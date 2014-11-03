@@ -13,7 +13,7 @@ public class Main {
     f(n) = f(n-1) + 2*f(n-2) + 3*f(n-3) and f(n) = n if n < 3
 
     Matrix equation for finding f(n+1), f(n), and f(n-1): (equation found by Neelay Junnarkar)
-     _      _     _     _       _   _
+     _      _      _     _      _   _
     | 3f(n+1) |   | 1 2 3 |^n  |  3  |
     | 3f(n)   | = | 1 0 0 |    |  0  |
     | 3f(n-1) |   | 0 1 0 |    |  1  |
