@@ -29,7 +29,7 @@ public class TCP_Server {
 	
 	public static void main(String[] args) {
 		try {
-			TCP_Server server = new TCP_Server();
+			new TCP_Server();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

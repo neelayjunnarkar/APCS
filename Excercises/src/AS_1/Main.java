@@ -72,7 +72,7 @@ public class Main {
     public static void main(String[] args) {
 
         long t0 = System.nanoTime(); //initial time. used to compare speeds of the different methods of calculating f(n)
-        int n = 15;
+        int n = 100;
         BigInteger fn = fn_matrix(n);
         System.out.println("f("+n+") = "+fn);
 
