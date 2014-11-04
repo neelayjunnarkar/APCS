@@ -22,14 +22,15 @@ public class Main {
      */
     public static BigInteger fn_matrix(int n) {
 
-        Matrix ma = new Matrix(new BigInteger[][]{
-                {new BigInteger("1"), new BigInteger("2"), new BigInteger("3")},  
-                {new BigInteger("1"), new BigInteger("0"), new BigInteger("0")},
-                {new BigInteger("0"), new BigInteger("1"), new BigInteger("0")}});
-        Matrix mb = new Matrix(new BigInteger[][]{
-                {new BigInteger("3")},
-                {new BigInteger("0")},
-                {new BigInteger("1")}});
+        Matrix ma = new Matrix(new BigInteger[][]{                                 //  _     _
+                {new BigInteger("1"), new BigInteger("2"), new BigInteger("3")},   // | 1 2 3 |
+                {new BigInteger("1"), new BigInteger("0"), new BigInteger("0")},   // | 1 0 0 |
+                {new BigInteger("0"), new BigInteger("1"), new BigInteger("0")}}); // | 0 1 0 |
+        Matrix mb = new Matrix(new BigInteger[][]{ //  _ _                         // |_     _|
+                {new BigInteger("3")},             // | 3 |
+                {new BigInteger("0")},             // | 0 |
+                {new BigInteger("1")}});           // | 1 |
+                                                   // |_ _|
         return (Matrix.pwr(ma, n).multiply(mb).matrix[1][0]).divide(new BigInteger("3"));
     }
 
@@ -71,10 +72,8 @@ public class Main {
     public static void main(String[] args) {
 
         long t0 = System.nanoTime(); //initial time. used to compare speeds of the different methods of calculating f(n)
-        //matrix (times) (ns):
-        //iterative (times) (ns):
-        int n = 150;
-       BigInteger fn = fn_iterative(n);
+        int n = 100;
+        BigInteger fn = fn_matrix(n);
         System.out.println("f("+n+") = "+fn);
 
 
