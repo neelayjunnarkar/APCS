@@ -5,38 +5,38 @@ import java.util.Arrays;
 
 public class Matrix {
 
-    final int M; //columns
-    final int N; //rows
+    final int coln; //columns
+    final int rown; //rows
     final BigInteger[][] matrix; // 2d array of elements
 
 
     /**
      *defualts elements of matrix to 0
-     * @param M columns
-     * @param N rows
+     * @param coln columns
+     * @param rown rows
      */
-    public Matrix(int M, int N) {
-        this.M = M;
-        this.N = N;
-        matrix = new BigInteger[M][N];
+    public Matrix(int coln, int rown) {
+        this.coln = coln;
+        this.rown = rown;
+        matrix = new BigInteger[coln][rown];
 
-        for (int i = 0; i < M; i++)
-            for (int j = 0; j < N; j++)
+        for (int i = 0; i < coln; i++)
+            for (int j = 0; j < rown; j++)
                 matrix[i][j] = new BigInteger("0");
     }
 
     /**
      *
-     * @param M columns
-     * @param N rows
+     * @param coln columns
+     * @param rown rows
      * @param init default value of matrix elements
      */
-    public Matrix(int M, int N, BigInteger init) {
-        this.M = M;
-        this.N = N;
-        matrix = new BigInteger[M][N];
-        for (int i = 0; i < M; i++)
-            for (int j = 0; j < N; j++)
+    public Matrix(int coln, int rown, BigInteger init) {
+        this.coln = coln;
+        this.rown = rown;
+        matrix = new BigInteger[coln][rown];
+        for (int i = 0; i < coln; i++)
+            for (int j = 0; j < rown; j++)
                 matrix[i][j] = init;
     }
 
@@ -45,11 +45,11 @@ public class Matrix {
      * @param matrix the 2d array from which a matrix is created
      */
     public Matrix(BigInteger[][] matrix) {
-        M = matrix.length;
-        N = matrix[0].length;
-        this.matrix = new BigInteger[M][N];
-        for (int i = 0; i < M; i++)
-            for (int j = 0; j < N; j++)
+        coln = matrix.length;
+        rown = matrix[0].length;
+        this.matrix = new BigInteger[coln][rown];
+        for (int i = 0; i < coln; i++)
+            for (int j = 0; j < rown; j++)
                 this.matrix[i][j] = matrix[i][j];
     }
 
@@ -71,11 +71,11 @@ public class Matrix {
         Matrix A = new Matrix(Ao);
         Matrix B = new Matrix(Bo);
 
-        if (A.N != B.M) throw new RuntimeException("Illegal matrix dimensions.");
-        Matrix C = new Matrix(A.M, B.N, new BigInteger("0"));
-        for (int i = 0; i < C.M; i++)
-            for (int j = 0; j < C.N; j++)
-                for (int k = 0; k < A.N; k++)
+        if (A.rown != B.coln) throw new RuntimeException("Illegal matrix dimensions.");
+        Matrix C = new Matrix(A.coln, B.rown, new BigInteger("0"));
+        for (int i = 0; i < C.coln; i++)
+            for (int j = 0; j < C.rown; j++)
+                for (int k = 0; k < A.rown; k++)
                     C.matrix[i][j] = C.matrix[i][j].add( A.matrix[i][k].multiply(B.matrix[k][j]) );
         return C;
     }
@@ -89,11 +89,11 @@ public class Matrix {
         Matrix A = this;
         Matrix B = new Matrix(Bo);
 
-        if (A.N != B.M) throw new RuntimeException("Illegal matrix dimensions.");
-        Matrix C = new Matrix(A.M, B.N);
-        for (int i = 0; i < C.M; i++)
-            for (int j = 0; j < C.N; j++)
-                for (int k = 0; k < A.N; k++)
+        if (A.rown != B.coln) throw new RuntimeException("Illegal matrix dimensions.");
+        Matrix C = new Matrix(A.coln, B.rown);
+        for (int i = 0; i < C.coln; i++)
+            for (int j = 0; j < C.rown; j++)
+                for (int k = 0; k < A.rown; k++)
                     C.matrix[i][j] = C.matrix[i][j].add(A.matrix[i][k].multiply(B.matrix[k][j]));
         return C;
     }
@@ -102,8 +102,8 @@ public class Matrix {
      * prints the matrix
      */
     public void print() {
-        for (int i = 0; i < M; i++) {
-            for (int j = 0; j < N; j++)
+        for (int i = 0; i < coln; i++) {
+            for (int j = 0; j < rown; j++)
                 System.out.print(((matrix[i][j].compareTo(new BigInteger("0")) < 0) ? "":" ")+matrix[i][j]+" ");
             System.out.println();
         }
@@ -117,7 +117,7 @@ public class Matrix {
      * @return returns the resulting Matrix of m^n
      */
     public static Matrix pwr(Matrix m, int n) {
-        Matrix result = new Matrix(m.M, m.N);
+        Matrix result = new Matrix(m.coln, m.rown);
         result.matrix[0][0] = new BigInteger("1");
         result.matrix[1][1] = new BigInteger("1");
         result.matrix[2][2] = new BigInteger("1");

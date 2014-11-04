@@ -11,7 +11,7 @@ public class Main {
     /**
 
     f(n) = f(n-1) + 2*f(n-2) + 3*f(n-3)
-
+    Efficicently finds f(n) by using matrices
     Matrix equation for finding f(n+1), f(n), and f(n-1): (equation found by Neelay Junnarkar)
      _      _     _     _      _   _
     | f(n+1) |   | 1 2 3 |^n  |  3  |
@@ -21,19 +21,19 @@ public class Main {
 
      */
     public static BigInteger fn_matrix(int n) {
-        Matrix ma = new Matrix(new BigInteger[][]{
-                {new BigInteger("1"), new BigInteger("2"), new BigInteger("3")},
-                {new BigInteger("1"), new BigInteger("0"), new BigInteger("0")},
-                {new BigInteger("0"), new BigInteger("1"), new BigInteger("0")}});
-        Matrix mb = new Matrix(new BigInteger[][]{
-                {new BigInteger("3")},
-                {new BigInteger("3")},
-                {new BigInteger("-2")}});
-        return Matrix.pwr(ma, n).multiply(mb).matrix[1][0];
+        Matrix ma = new Matrix(new BigInteger[][]{                                //  _     _
+                {new BigInteger("1"), new BigInteger("2"), new BigInteger("3")},  // | 1 2 3 |
+                {new BigInteger("1"), new BigInteger("0"), new BigInteger("0")},  // | 1 0 0 |
+                {new BigInteger("0"), new BigInteger("1"), new BigInteger("0")}});// | 0 1 0 |
+        Matrix mb = new Matrix(new BigInteger[][]{                  //  _   _     // |_     _|
+                {new BigInteger("3")},                              // |  3  |
+                {new BigInteger("3")},                              // |  3  |
+                {new BigInteger("-2")}});                           // | -2  |
+        return Matrix.pwr(ma, n).multiply(mb).matrix[1][0];         // |_   _|
     }
 
     /**
-     * uses recursion to calculate f(n)
+     * Uses recursion to calculate f(n)
      * @param n f(n) where f(n) = f(n-1)+2*f(n-2)+3*f(n3)
      * @return returns f(n)
      */
@@ -67,16 +67,16 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        long t0 = System.currentTimeMillis(); //used to compare speeds of the different methods of calculating f(n)
-        //matrix (times) : 5, 8, 5, 5, 6
-        //iterative: 24, 22, 22, 25, 21, 22
+        long t0 = System.nanoTime(); //initial time. used to compare speeds of the different methods of calculating f(n)
+        //matrix (times) (ns) : 4935560, 4899118, 5056177, 4975594, 4889366
+        //iterative (times) (ns): 22385641, 26406989, 23874024, 23200107, 22918325
         int n = 150;
         //BigInteger fnm = fn_matrix(n);
-       BigInteger fni = fn_matrix(n);
+       BigInteger fni = fn_iterative(n);
       // System.out.println(" fm("+n+") = "+fnm);
         System.out.println("fi("+n+") = "+fni);
 
-        long tf = System.currentTimeMillis(); //used to compare speeds of the different methods of calculating f(n)
+        long tf = System.nanoTime(); //final time. used to compare speeds of the different methods of calculating f(n)
         System.out.println("tf - t0 = "+(tf-t0));
 
     }
