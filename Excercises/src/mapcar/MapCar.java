@@ -1,5 +1,6 @@
 package mapcar;
 
+import java.text.DecimalFormat;
 import java.util.*;
 
 public class MapCar {
@@ -9,6 +10,12 @@ public class MapCar {
      * @param <T> Type which the function operates on eg. Integer
      */
     interface Function<T> {
+    	
+    	/**
+    	 * This method must be called to do the specified operations on the parameter t
+    	 * @param t parameter
+    	 * @return
+    	 */
         T operate(T t);
     }
 
@@ -35,9 +42,9 @@ public class MapCar {
     /**
      * A Function which implements the Function<T> interface and doubles the element
      */
-    static Function<Integer> double_elem = new Function<Integer>() {
+    static Function<Double> double_elem = new Function<Double>() {
         @Override
-        public Integer operate(Integer i) {
+        public Double operate(Double i) {
             return i*2;
         }
     };
@@ -52,6 +59,21 @@ public class MapCar {
      */
     static <T> AbstractCollection<T> mapcar(HashSet<T> coll, Function<T> fn) {
         AbstractCollection<T> list = new HashSet<>();
+        for (T t : coll) {
+            list.add(fn.operate(t));
+        }
+        return list;
+    }
+    
+    /**
+     * A specialized mapcar that operates on arraylists
+     * @param coll ArrayList
+     * @param fn Function
+     * @param <T> Type
+     * @return Returns a AbstractCollection<T> which is the result of operating fn on every element of coll
+     */
+    static <T> AbstractCollection<T> mapcar(ArrayList<T> coll, Function<T> fn) {
+        AbstractCollection<T> list = new ArrayList<>();
         for (T t : coll) {
             list.add(fn.operate(t));
         }
@@ -89,30 +111,40 @@ public class MapCar {
     }
 
     public static void main(String[] args) {
-        Stack<Integer> arr = new Stack<Integer>();
+        Stack<Integer> stack = new Stack<Integer>();
         for (int i = 0; i < 10; i++)
-            arr.add(i);
+            stack.add(i);
 
-        System.out.print("original array:  ");
-        for (int i : arr)
+        System.out.print("Stack of Integers:  ");
+        for (int i : stack)
             System.out.print(i + " ");
         System.out.println();
 
         System.out.print("after squared:   ");
-        arr = (Stack<Integer>)mapcar(arr, square);
-        for (int i : arr)
+        stack = (Stack<Integer>)mapcar(stack, square);
+        for (int i : stack)
             System.out.print(i + " ");
         System.out.println();
 
         System.out.print("after add_one:   ");
-        arr = (Stack<Integer>)mapcar(arr, add_one);
-        for (int i : arr)
+        stack = (Stack<Integer>)mapcar(stack, add_one);
+        for (int i : stack)
             System.out.print(i + " ");
         System.out.println();
 
-        System.out.print("after doubled:   ");
-        arr = (Stack<Integer>)mapcar(arr, double_elem);
-        for (int i : arr)
-            System.out.print(i + " ");
+       	DecimalFormat df = new DecimalFormat("#.00"); // used to round decimals to 2 digits after the decimal when printing
+       	
+        ArrayList<Double> arr = new ArrayList<Double>();
+        for (double i = 1.1; i < 32.2; i += 1.21)
+        		arr.add(i);
+        System.out.print("ArrayList of doubles (rounded to 2 digits after the decimal): ");
+        for (double i : arr)
+        	System.out.print(df.format(i)+ " ");
+        System.out.println();
+              	
+        System.out.print("after doubled (rounds to 2 digits after decimal):   ");
+        arr = (ArrayList<Double>)mapcar(arr, double_elem);
+        for (double i : arr)
+            System.out.print(df.format(i)+ " ");
     }
 }
