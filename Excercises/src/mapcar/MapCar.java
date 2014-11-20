@@ -1,6 +1,5 @@
 package mapcar;
 
-
 import java.util.*;
 
 public class MapCar {
