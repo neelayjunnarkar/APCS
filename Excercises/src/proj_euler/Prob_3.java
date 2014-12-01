@@ -29,10 +29,8 @@ public class Prob_3 {
 		double upper_bound = (double) Math.floor(Math.sqrt(n));
 		double i = 1;
 		for (i = upper_bound; i > 0; i--) {
-			
-			if(n%i == 0 && isPrime(i)) {
+			if(n%i == 0 && isPrime(i))
 				break;
-			}
 		}
 
 		return i;

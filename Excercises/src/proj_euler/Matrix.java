@@ -1,7 +1,6 @@
 package proj_euler;
 
 import java.math.BigInteger;
-import java.util.Arrays;
 
 public class Matrix {
 

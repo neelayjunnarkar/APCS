@@ -1,7 +1,5 @@
 package proj_euler;
 
-import java.math.BigInteger;
-
 public class Prob_1 {
 
 	public static int execute_pr1() {
