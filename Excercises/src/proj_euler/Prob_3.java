@@ -31,8 +31,7 @@ public class Prob_3 {
 		for (i = upper_bound; i > 0; i--) {
 			
 			if(n%i == 0 && isPrime(i)) {
-				System.out.println("sdfsadf: "+i);
-				return i;
+				break;
 			}
 		}
 
