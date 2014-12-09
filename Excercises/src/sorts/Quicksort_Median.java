@@ -11,7 +11,7 @@ public class Quicksort_Median {
 		ArrayList<Integer> barr = new ArrayList<>();
 		
 		int pivot = arr.size()/2;
-		
+		return 1.0;
 
 	}
 
