@@ -79,34 +79,42 @@ public class BSTNode<T extends Comparable<T>> {
 //	}
 	
 	public void printTree() {
-		System.out.print("["+datum+"]");
-		
-		if (left == null && right != null)
-			right.printTree();
-		else if (right == null && left != null)
-			left.printTree();
-		else if (right != null && left != null) {
-			left.printTree();
-			right.printTree();
-		}
-			
+		System.out.print(toString());
 	}
 	
 	public String toString() {
 		
 		String str = "";
-		str += "["+datum+"]";
-		
-		if (left == null && right == null )
-			return str;
-		
-		if (left != null)
-			str += left.toString();
-		
-		if (right != null)
+
+		if (isLeaf()) {
+			str += datum + " ";
+		} else if (left == null && right != null) {
+			str += datum + " ";
 			str += right.toString();
-		
+		} else if (left != null && right == null) {
+			str += left.toString();
+			str += datum + " ";
+		} else if(left != null && right != null) {
+			str += left.toString();
+			str += datum + " ";
+			str += right.toString();
+		}
 		return str;
+	}
+
+	public int depth() {
+		if(isLeaf()) {
+			return 1;
+		} else if (left == null && right != null) {
+			return 1 + right.depth();
+		} else if (left != null && right == null) {
+			return 1 + left.depth();
+		} else if (left != null && right != null) {
+			int leftd = left.depth();
+			int rightd = right.depth();
+			return 1 + ((leftd > rightd) ? leftd : rightd);
+		}
+		return -1;
 	}
 
 }

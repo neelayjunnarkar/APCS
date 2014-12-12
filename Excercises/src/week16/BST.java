@@ -20,19 +20,17 @@ public class BST<T extends Comparable<T>> {
 		root.printTree();
 	}
 	
-//	public String toString() {	
-//
-//	}
-
-	
+	public String toString() {
+		return root.toString();
+	}
 	
 	public static void main(String[] args) {
-		BST<Integer> bst = new BST<>(3);
-		bst.getTree().insert(10);
-		bst.getTree().insert(12);
-		bst.getTree().insert(2);
-	//	bst.printTree();
-		String str = bst.getTree().toString();
-		System.out.println(str);
+		BST<Integer> bst = new BST<>(5);
+		for (int i = 0; i < 10; i+=1)
+			bst.getTree().insert(i);
+		bst.printTree();
+		System.out.println();
+		int i = bst.getTree().depth();
+		System.out.println("i: "+i);
 	}
 }
