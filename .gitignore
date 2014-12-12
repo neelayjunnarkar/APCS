@@ -1,3 +1,13 @@
+
+#####IntelliJ
+
+
+*/out/*
+*.xml
+*.xlsx
+*.name
+*.iml
+
 #################
 ## Eclipse
 #################
@@ -127,6 +137,7 @@ publish/
 # Publish Web Output
 *.Publish.xml
 *.pubxml
+*.publishproj
 
 # NuGet Packages Directory
 ## TODO: If you have NuGet Package Restore enabled, uncomment the next line
@@ -213,21 +224,3 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
-
-# Eclipse
-.classpath
-.project
-.settings/
-*.class
-
-# Intellij
-.idea/
-*.iml
-*.iws
-
-# Mac
-.DS_Store
-
-# Maven
-log/
-target/
