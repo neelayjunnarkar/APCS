@@ -2,9 +2,25 @@ package week16;
 
 public class BSTNode<T extends Comparable<T>> {
 
+	/**
+	 * Datum of the node
+	 */
 	private T datum;
-	private BSTNode<T> left, right;
-	
+
+	/**
+	 * The left branching node of the node
+	 */
+	private BSTNode<T> left;
+
+	/**
+	 * The right branching node of the node
+	 */
+	private BSTNode<T> right;
+
+	/**
+	 * Creates a BSTNode of the value datum
+	 * @param datum the value of the node created
+	 */
 	public BSTNode(T datum) {
 		this.datum = datum;
 	}
@@ -16,15 +32,27 @@ public class BSTNode<T extends Comparable<T>> {
 	public void setDatum(T datum) {
 		this.datum = datum;
 	}
-	
+
+	/**
+	 *
+	 * @return returns the left branching node of the node
+	 */
 	public BSTNode<T> getLeft() {
 		return left;
 	}
-	
+
+	/**
+	 *
+	 * @return returns the right branching node of the node
+	 */
 	public BSTNode<T> getRight() {
 		return right;
 	}
-	
+
+	/**
+	 *
+	 * @return returns whether the root node has any branching nodes--false if it does
+	 */
 	public boolean isLeaf() {
 		if (right == null && left == null)
 			return true;
@@ -73,7 +101,12 @@ public class BSTNode<T extends Comparable<T>> {
 		}
 		right.datum = datum;
 	}
-	
+
+	/**
+	 * Deletes the value datum from the bst and shifts the bst to make sure it remains sorted
+	 * @param datum Deletes the value datum from the binary search tree
+	 * @throws Throwable
+	 */
 	public void delete(T datum) throws Throwable {
 		if (datum.compareTo(this.datum) == 0) {
 			if (!isLeaf()) {
@@ -112,6 +145,9 @@ public class BSTNode<T extends Comparable<T>> {
 		}
 	}
 
+	/**
+	 * Used in delete(T datum) to shift the tree to make sure it remains sorted
+	 */
 	private void shift() {
 		if (right == null && left != null) {
 			datum = left.datum;
@@ -128,10 +164,17 @@ public class BSTNode<T extends Comparable<T>> {
 		}
 	}
 
+	/**
+	 * Prints the tree with this node as its root as a sorted list of T
+	 */
 	public void printTree() {
 		System.out.print(toString());
 	}
-	
+
+	/**
+	 *
+	 * @return returns the tree with this node as its root in the form of a sorted list of T
+	 */
 	public String toString() {
 		
 		String str = "";
@@ -152,7 +195,11 @@ public class BSTNode<T extends Comparable<T>> {
 		return str;
 	}
 
-	public int depth() {
+	/**
+	 *
+	 * @return returns the depth of the tree
+	 */
+	public int depth() throws Throwable {
 		if(isLeaf()) {
 			return 1;
 		} else if (left == null && right != null) {
@@ -164,7 +211,7 @@ public class BSTNode<T extends Comparable<T>> {
 			int rightd = right.depth();
 			return 1 + ((leftd >= rightd) ? leftd : rightd);
 		}
-		return -1; //error value
+		throw new Throwable("depth: error");
 	}
 
 }

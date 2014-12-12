@@ -2,24 +2,46 @@ package week16;
 
 public class BST<T extends Comparable<T>> {
 
+	/**
+	 * The root node of the binary search tree
+	 */
 	private BSTNode<T> root;
-	
+
+	/**
+	 * Creates a binary search tre which consists of a single node--the root-which has the value of datum
+	 * @param datum the datum of the root of the binary search tree
+	 */
 	public BST(T datum) {
 		root = new BSTNode<T>(datum);
 	}
-	
+
+	/**
+	 *
+	 * @return returns the root node of the binary search tree
+	 */
 	public BSTNode<T> getTree() {
 		return root;
 	}
-	
+
+	/**
+	 *
+	 * @return returns whether the root node has any branching nodes--false if it does
+	 */
 	public boolean isLeaf() {
 		return root.isLeaf();
 	}
-	
+
+	/**
+	 * Prints the tree in the format of a sorted list of T
+	 */
 	public void printTree() {
 		root.printTree();
 	}
-	
+
+	/**
+	 * Used for system.out.print
+	 * @return returns the tree in the format of a sorted list of T
+	 */
 	public String toString() {
 		return root.toString();
 	}
