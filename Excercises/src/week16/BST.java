@@ -8,7 +8,7 @@ public class BST<T extends Comparable<T>> {
 	private BSTNode<T> root;
 
 	/**
-	 * Creates a binary search tre which consists of a single node--the root-which has the value of datum
+	 * Creates a binary search tree which consists of a single node--the root-which has the value of datum
 	 * @param datum the datum of the root of the binary search tree
 	 */
 	public BST(T datum) {

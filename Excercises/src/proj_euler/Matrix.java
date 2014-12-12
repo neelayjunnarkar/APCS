@@ -118,9 +118,9 @@ public class Matrix {
      */
     public static Matrix pwr(Matrix m, int n) {
         Matrix result = new Matrix(m.coln, m.rown);
-        result.matrix[0][0] = new BigInteger("1");
-        result.matrix[1][1] = new BigInteger("1");
-       // result.matrix[2][2] = new BigInteger("1");
+	        result.matrix[0][0] = new BigInteger("1");
+	        result.matrix[1][1] = new BigInteger("1");
+	       // result.matrix[2][2] = new BigInteger("1");
         while (n != 0){
             if (n%2==1){
                 result = Matrix.multiply(result, m);
