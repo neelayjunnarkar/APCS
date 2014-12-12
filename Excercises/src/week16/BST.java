@@ -24,13 +24,21 @@ public class BST<T extends Comparable<T>> {
 		return root.toString();
 	}
 	
-	public static void main(String[] args) {
-		BST<Integer> bst = new BST<>(5);
-		for (int i = 0; i < 10; i+=1)
-			bst.getTree().insert(i);
-		bst.printTree();
-		System.out.println();
-		int i = bst.getTree().depth();
-		System.out.println("i: "+i);
+	public static void main(String[] args) throws Throwable {
+		double avg = 0;
+		double sum = 0;
+		int c;
+		for (c = 0; c < 10000; c++) {
+
+			RandP randP = new RandP(0, 10000);
+			BST<Integer> bst = new BST<>(randP.nextInt());
+
+			for (int i = 0; i < randP.init_size(); i++) {
+				bst.getTree().insert(randP.nextInt());
+			}
+			sum += bst.getTree().depth();
+		}
+		avg = sum/c;
+		System.out.println("average depth: "+avg);
 	}
 }

@@ -74,10 +74,60 @@ public class BSTNode<T extends Comparable<T>> {
 		right.datum = datum;
 	}
 	
-//	public T delete(T datum) {
-//		
-//	}
-	
+	public void delete(T datum) throws Throwable {
+		if (datum.compareTo(this.datum) == 0) {
+			if (!isLeaf()) {
+				shift();
+				return;
+			} else
+				throw new Throwable("deleting self from leaf");
+		} else if (datum.compareTo(this.datum) < 0) {
+			if (left != null) {
+				if (left.datum.compareTo(datum) == 0) {
+					if (left.isLeaf()) {
+						left = null;
+						return;
+					} else {
+						left.shift();
+						return;
+					}
+				} else
+					left.delete(datum);
+			} else
+				throw new Throwable("datum "+datum+" not in bst");
+		} else if (datum.compareTo(this.datum) > 0) {
+			if (right != null) {
+				if (right.datum.compareTo(datum) == 0) {
+					if (right.isLeaf()) {
+						right = null;
+						return;
+					} else {
+						right.shift();
+						return;
+					}
+				} else
+					right.delete(datum);
+			} else
+				throw new Throwable("datum "+datum+" not in bst");
+		}
+	}
+
+	private void shift() {
+		if (right == null && left != null) {
+			datum = left.datum;
+			if (left.isLeaf())
+				left = null;
+			else
+				left.shift();
+		} else if (right != null){
+			datum = right.datum;
+			if (right.isLeaf())
+				right = null;
+			else
+				right.shift();
+		}
+	}
+
 	public void printTree() {
 		System.out.print(toString());
 	}
@@ -112,9 +162,9 @@ public class BSTNode<T extends Comparable<T>> {
 		} else if (left != null && right != null) {
 			int leftd = left.depth();
 			int rightd = right.depth();
-			return 1 + ((leftd > rightd) ? leftd : rightd);
+			return 1 + ((leftd >= rightd) ? leftd : rightd);
 		}
-		return -1;
+		return -1; //error value
 	}
 
 }
