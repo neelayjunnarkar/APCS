@@ -1,23 +1,30 @@
 package week17;
 
 import java.util.AbstractQueue;
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.Iterator;
 
 public class PriorityQueue<T extends Comparable<T>> extends AbstractQueue<T> {
 
 	private int size;
-	private Comparator<T> comparator;
-	BST<T> bst;
-
+	private int insertion_i = 0;
+	Object[] queue;
+	
+	public void print() {
+		for (Object t : queue)
+			if (t != null)
+				System.out.print((T)t+" ");
+		System.out.println();
+	}
+	
 	PriorityQueue() {
-		this(0, null);
+		this(0);
 	}
 
-	PriorityQueue(int init_size, Comparator<T> comparator) {
+	PriorityQueue(int init_size) {
 		size = init_size;
-		this.comparator = comparator;
+		queue = new Object[size];
 	}
 
 	/**
@@ -32,13 +39,40 @@ public class PriorityQueue<T extends Comparable<T>> extends AbstractQueue<T> {
 	 * Inserts the specified element into this queue if possible
 	 */
 	public boolean add(T arg) {
-		if (size == 0) {
-			bst = new BST<>(arg);
+		if (insertion_i >= size)
+			resize(size+10);
+		
+		queue[insertion_i] = arg;
+		if (insertion_i > 0) {
+
+			sortUp(insertion_i);
 		}
-		bst.getTree().insert(arg);
-		++size;
+
+		++insertion_i;
 		return true;
 	}
+	
+	public void sortUp(int index) {
+		int parent = (index % 2 == 0) ? index/2 : (index-1)/2;
+		print();
+		if (index <= 0)
+			return;
+
+		if (((T)queue[index]).compareTo((T)queue[parent]) < 0) {
+			T temp = (T)queue[index];
+			queue[index] = queue[parent];
+			queue[parent] = temp;
+			sortUp(parent);
+		}
+
+	}
+	
+	public void resize(int new_sz) {
+		queue = Arrays.copyOf(queue, new_sz);
+		size = new_sz;
+	}
+	
+
 
 	
 	/**
@@ -48,7 +82,7 @@ public class PriorityQueue<T extends Comparable<T>> extends AbstractQueue<T> {
 	 */
 	public boolean addAll(Collection<? extends T> c) {
 		for (T t : c) {
-			bst.getTree().insert(t);
+			add(t);
 		}
 		return true;
 	}
@@ -60,7 +94,7 @@ public class PriorityQueue<T extends Comparable<T>> extends AbstractQueue<T> {
 	public T peek() {
 		if (size == 0)
 			return null;
-		return bst.getTree().getDatum();
+		return null;
 	}
 
 	/**
@@ -79,18 +113,7 @@ public class PriorityQueue<T extends Comparable<T>> extends AbstractQueue<T> {
 		if (size == 0)
 			return null;
 		
-		T retval = bst.getTree().getDatum();
-		
-		try {
-			bst.getTree().delete(retval);
-		} catch (Throwable e) {
-			System.out.println("failed poll");
-			e.printStackTrace();
-		}
-		
-		--size;
-		
-		return retval;
+		return null;
 	}
 
 	/**
@@ -107,13 +130,6 @@ public class PriorityQueue<T extends Comparable<T>> extends AbstractQueue<T> {
 
 	}
 
-	/**
-	 * Returns the comparator used to order the elements in this queue
-	 * @return comparator<T>
-	 */
-	public Comparator<T> comparator() {
-		return comparator;
-	}
 
 	/**
 	 * Returns an iterator over the elements in this queue

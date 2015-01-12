@@ -6,13 +6,14 @@ public class Main {
 	public static void main(String[] args) {
 		PriorityQueue<Integer> queue = new PriorityQueue<>();
 		
-		RandP randP = new RandP(0, 100);
+	//	RandP randP = new RandP(0, 10);
 
-		for (int i = 0; i < randP.init_size(); i++) {
-			queue.add(randP.nextInt());
+		for (int i = 10; i > 0; i--) {
+			queue.add(i);
 		}
+		
+		queue.print();
 
-		queue.bst.printTree();
 	}
 	
 }
