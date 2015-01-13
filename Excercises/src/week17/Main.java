@@ -1,18 +1,23 @@
 package week17;
 
+import week16.*;
 
 public class Main {
 
-	public static void main(String[] args) {
-		PriorityQueue<Integer> queue = new PriorityQueue<>();
-		
-		RandP randP = new RandP(0, 100);
 
-		for (int i = 0; i < randP.init_size(); i++) {
-			queue.add(randP.nextInt());
-		}
+	public static void main(String[] args) throws InterruptedException {
 
-		queue.bst.printTree();
+		PriorityQueue<Integer> queue = new PriorityQueue<>(10, null);
+
+		for (int i = 0; i < 10; ++i)
+			queue.add(i);
+
+		queue.print();
+		//System.out.println("peek: "+queue.peek());
+		System.out.println("size: "+queue.size());
+		queue.poll();
+		queue.print();
+
 	}
 	
 }

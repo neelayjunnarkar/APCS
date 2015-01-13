@@ -9,7 +9,7 @@ public class Prob_9 {
         long n = 1;
         while (true) {
 
-            if (n*c > 1000)
+            if (n*1 > 1000)
                 break;
             n++;
         }
