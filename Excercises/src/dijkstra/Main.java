@@ -1,5 +1,6 @@
 package dijkstra;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.InputMismatchException;
 
@@ -10,32 +11,40 @@ import java.util.InputMismatchException;
 public class Main {
     
     static String[] dijkstra(HashMap<String, Node> graph, String source, String destination) {
-        if (source.equals(destination))
-            return new String[]{"A"};
 
-        int dist = Integer.MAX_VALUE;
-        String node = null;
+        ArrayList<String> selectedNodes = new ArrayList<>();
+        
+        graph.get(source).dist = 0;
+        graph.get(source).linked = true;
+        selectedNodes.add(source);
+        
+        while (graph.size() != selectedNodes.size()) {
+            
+            int min_dist = Integer.MAX_VALUE;
+            String min_dist_node = null;
+            
+            for (String node : selectedNodes) {
 
-        if (graph.get(source).parent != null)
-            graph.get(source).dist = graph.get(graph.get(source).parent).dist + graph.get(graph.get(source).parent).getDistTo(source);
-
-        for (String adjacent : graph.get(source).adjacents.keySet()) {
-
-            graph.get(adjacent).parent = source;
-
-            if (graph.get(source).adjacents.get(adjacent) < dist) {
-                dist = graph.get(source).adjacents.get(adjacent);
-                node = adjacent;
+                for (String adjacent : graph.get(node).adjacents.keySet()) {
+                    graph.get(adjacent).parent = node;
+                    if (graph.get(graph.get(adjacent).parent).getDistTo(adjacent) + graph.get(graph.get(adjacent).parent).dist < graph.get(adjacent).dist)
+                        graph.get(adjacent).dist = graph.get(graph.get(adjacent).parent).getDistTo(adjacent) + graph.get(graph.get(adjacent).parent).dist;
+                    
+                    if (graph.get(adjacent).dist < min_dist) {
+                        min_dist = graph.get(adjacent).dist;
+                        min_dist_node = adjacent;
+                    }
+                }
+ 
             }
-
-            if (graph.get(source).getDistTo(adjacent)+graph.get(graph.get(adjacent).parent).dist < graph.get(adjacent).dist)
-                graph.get(adjacent).dist = graph.get(graph.get(adjacent).parent).dist + graph.get(source).getDistTo(adjacent);
+            if (min_dist_node != null)
+                selectedNodes.add(min_dist_node);
+            graph.get(min_dist_node).linked = true;
 
         }
-        System.out.println("dist: "+dist);
-        System.out.println("node: "+node);
-
-        return dijkstra(graph, node, destination);
+        
+        
+        return new String[]{"A"};
     }
     
     static HashMap<String, Node> nodes = new HashMap<>();
