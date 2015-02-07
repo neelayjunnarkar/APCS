@@ -10,7 +10,14 @@ import java.util.Stack;
  */
 public class Main {
 
-    static ArrayList<String> dijkstra(HashMap<String, Node> graph, String source, String destination) {
+    /**
+     * Calculates the shortest distance from source to destination in an adjacency list
+     * @param graph the adjacency list
+     * @param source the beggining node in the adjacency list
+     * @param destination the destination node in the adjacency list
+     * @return Returns the shortest path from source to destination, in terms of nodes in the adjacency list
+     */
+    static ArrayList<String> dijkstra(AdjacencyList graph, String source, String destination) {
 
         ArrayList<String> selectedNodes = new ArrayList<>();
 
@@ -59,12 +66,13 @@ public class Main {
                                  //so the order of the returned arraylist is source -> destination
         }
 
-        return ret;
+        return ret; //returns the correctly ordered, shortest path from source to destination
     }
 
-    static HashMap<String, Node> nodes = new HashMap<>();
-
     public static void main(String[] args) {
+
+        AdjacencyList nodes = new AdjacencyList();
+
         nodes.put("A", new Node(new String[]{"B", "F"}, new Integer[]{8, 10}));
         nodes.put("B", new Node(new String[]{"C", "E"}, new Integer[]{4, 10}));
         nodes.put("C", new Node(new String[]{"D"}, new Integer[]{3}));
@@ -76,18 +84,12 @@ public class Main {
 
 
         String begin = "G", end = "F";
-        System.out.println(dijkstra(nodes, "G", end));
+        System.out.println(dijkstra(nodes, begin, end));
+        //prints "[G, H, A, F]"
 
 
-        System.out.println("parent: "+nodes.get(end).parent + "   dist from G:" + nodes.get(end).dist);
-
-
-//        for ( String node : nodes.keySet()) {
-//            System.out.println(node+":");
-//            for (String adjacent : nodes.get(node).adjacents.keySet()) {
-//                System.out.println("    "+adjacent + " "+nodes.get(node).adjacents.get(adjacent));
-//            }
-//        }
+        System.out.println("parent: "+nodes.get(end).parent + "   dist from "+begin+": " + nodes.get(end).dist);
+        //prints "parent: A   dist from G: 17"
 
     }
 }

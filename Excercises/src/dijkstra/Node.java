@@ -3,7 +3,7 @@ package dijkstra;
 import java.util.HashMap;
 
 /**
- * Created by 95028672 on 2/3/2015.
+ * A Node class that represents a node in an Adjacency List
  */
 public class Node {
 

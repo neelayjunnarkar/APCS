@@ -1,8 +1,11 @@
 package dijkstra;
 
+import java.util.HashMap;
+
+
 /**
- * Created by 95028672 on 2/3/2015.
+ * This class allows for easier use of a specific type of HashMap, used to represent an Adjaceny List
  */
-public class AdjacencyList {
+public class AdjacencyList extends HashMap<String, Node> {
 
 }
