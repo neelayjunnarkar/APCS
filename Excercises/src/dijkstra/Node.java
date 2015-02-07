@@ -10,7 +10,7 @@ public class Node {
     public HashMap<String, Integer> adjacents;
     public String parent;
     public int dist;
-    Boolean linked = false;
+    public Boolean linked = false;
 
     public Node() {
         dist = Integer.MAX_VALUE;
@@ -30,6 +30,5 @@ public class Node {
     
     public int getDistTo(String adjacentNode) {
         return adjacents.get(adjacentNode);
-        
     }
 }
