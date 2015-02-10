@@ -15,8 +15,28 @@ Introduction:
  the program correctly. However, the implementation still adheres to the specifications set out for it.
  
  Structure:
-
+    In this implementation, Dijkstra's algorithm is implemented as a function which takes an adjacency list to represent
+ the graph, and 2 nodes--one to represent the source, one to represent the destination. In order to easily keep track of 
+ nodes, this implementation makes extensive use of HashMaps, using strings to represent nodes.
+    
+    Classes:
+        AdjacencyList: The representation of the graph to pass to the Dijkstra's function
+            Extends a HashMap with Strings as keys and Nodes as values--inherits all HashMap functions
+            
+        Node: The representation of a node in the graph--used in AdjacencyList
+            Fields:
+                A HashMap of the nodes adjacent to the node, uses Strings as keys that represent nodes and Integers as 
+                    values represent the distance from the node to the adjacent node
+                A String that represents the parent node of the node
+                An Int dist that represents the shortest distance (at the time of access) from source to the node.
+                    If the node has no known path from source to the node, dist is set to Integer.MAX_VALUE
+                A Boolean linked which tells whether the node has been selected in the graph
+            Methods:
+                int getDistTo(Node adjacent): returns the distance from the node to the adjacent node
+                    
  Process:
- 
+    Most of my time spent during this process was trying to figure out which data structure to use, and how to implement
+ it. I ended up implementing an adjacency list, although I also implemented a linked list--the Node class.
+    
  Acknowledgements:
     I used wikipedia's list of possible ways to implement an adjacency list as the basis of my adjacency list.

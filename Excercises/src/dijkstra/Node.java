@@ -17,7 +17,12 @@ public class Node {
         parent = null;
         linked = false;
     }
-    
+
+    /**
+     *  Creates a node with a HashMap of it's adjacent nodes, and the distances to each of them
+     * @param nodes The adjacent nodes, represented as a string
+     * @param dists The distances to the adjacent nodes
+     */
     public Node(String[] nodes, Integer[] dists) {
         adjacents = new HashMap<>();
         for (int i = 0; i < ((nodes.length < dists.length) ? nodes.length : dists.length); ++i) {
@@ -27,7 +32,12 @@ public class Node {
         parent = null;
         linked = false;
     }
-    
+
+    /**
+     * *
+     * @param adjacentNode the adjacent node, to which the distance will be found
+     * @return Returns the distance from this node to the adjacent node
+     */
     public int getDistTo(String adjacentNode) {
         return adjacents.get(adjacentNode);
     }
