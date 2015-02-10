@@ -1,0 +1,22 @@
+Dijkstra's Algorithm
+====================
+    implemented by Neelay Junnarkar
+    
+Introduction:
+     This is an implementation of Dijkstra's Algorithm, and finds the shortest path from one node in a graph to another.
+ 
+ Specification Completement:
+     To do so, this program implements a method that takes an adjacency list as a representation for the graph, and a source node
+ and a destination node. The method returns a sequence of nodes which represents the shortest path from the source node to the
+ destination node in the graph. This fulfils the specifications for this program.
+ 
+ Errors:
+    One shortfall of this implementation is that it does not handle many error cases, and assumes that the user will use
+ the program correctly. However, the implementation still adheres to the specifications set out for it.
+ 
+ Structure:
+
+ Process:
+ 
+ Acknowledgements:
+    I used wikipedia's list of possible ways to implement an adjacency list as the basis of my adjacency list.
